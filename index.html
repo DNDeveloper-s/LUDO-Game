@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!--Style Sheets-->
+    <link rel="stylesheet" href="./sass/main.css">
+</head>
+<body>
+    <div class="ludo">
+        <div class="ludo__body">
+            <div class="ludo__container">
+                <div id="pawn"></div>
+
+                <div class="ludo__players">
+                    <div class="ludo__players--home">
+                        <div class="ludo__players--home-1">
+                            <div class="ludo__players--home__place" data-place="1"></div>
+                            <div class="ludo__players--home__place" data-place="2"></div>
+                            <div class="ludo__players--home__place" data-place="3"></div>
+                            <div class="ludo__players--home__place" data-place="4"></div>
+                        </div>
+                        <div class="ludo__players--home-2">
+                            <div class="ludo__players--home__place" data-place="1"></div>
+                            <div class="ludo__players--home__place" data-place="2"></div>
+                            <div class="ludo__players--home__place" data-place="3"></div>
+                            <div class="ludo__players--home__place" data-place="4"></div>
+                        </div>
+                        <div class="ludo__players--home-3">
+                            <div class="ludo__players--home__place" data-place="1"></div>
+                            <div class="ludo__players--home__place" data-place="2"></div>
+                            <div class="ludo__players--home__place" data-place="3"></div>
+                            <div class="ludo__players--home__place" data-place="4"></div>
+                        </div>
+                        <div class="ludo__players--home-4">
+                            <div class="ludo__players--home__place" data-place="1"></div>
+                            <div class="ludo__players--home__place" data-place="2"></div>
+                            <div class="ludo__players--home__place" data-place="3"></div>
+                            <div class="ludo__players--home__place" data-place="4"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ludo__tracks">
+                    <div class="ludo__tracks-1">
+                        <div class="ludo__tracks-1--rows">
+                            <div class="ludo__tracks-1--rows-1">
+                                <div class="boxRow box" data-id="24">24</div>
+                                <div class="boxRow box" data-id="23">23</div>
+                                <div class="boxRow box" data-id="22">22</div>
+                                <div class="boxRow box" data-id="21">21</div>
+                                <div class="boxRow box" data-id="20">20</div>
+                                <div class="boxRow box" data-id="19">19</div>
+                            </div>
+                            <div class="ludo__tracks-1--rows-2">
+                                <div class="boxRow box" data-id="25">25</div>
+                                <div class="boxRow box" data-id-win="26">26</div>
+                                <div class="boxRow box" data-id-win="27">27</div>
+                                <div class="boxRow box" data-id-win="28">28</div>
+                                <div class="boxRow box" data-id-win="29">29</div>
+                                <div class="boxRow box" data-id-win="30">30</div>
+                            </div>
+                            <div class="ludo__tracks-1--rows-3">
+                                <div class="boxRow box" data-id="26">26</div>
+                                <div class="boxRow box" data-id="27">27</div>
+                                <div class="boxRow box" data-id="28">28</div>
+                                <div class="boxRow box" data-id="29">29</div>
+                                <div class="boxRow box" data-id="30">30</div>
+                                <div class="boxRow box" data-id="31">31</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ludo__tracks-2">
+                        <div class="ludo__tracks-2--rows">
+                            <div class="ludo__tracks-2--rows-1">
+                                <div class="boxRow box" data-id="5">5</div>
+                                <div class="boxRow box" data-id="4">4</div>
+                                <div class="boxRow box" data-id="3">3</div>
+                                <div class="boxRow box" data-id="2">2</div>
+                                <div class="boxRow box" data-id="1">1</div>
+                                <div class="boxRow box" data-id="52">52</div>
+                            </div>
+                            <div class="ludo__tracks-2--rows-2">
+                                <div class="boxRow box" data-id-win="56">56</div>
+                                <div class="boxRow box" data-id-win="55">55</div>
+                                <div class="boxRow box" data-id-win="54">54</div>
+                                <div class="boxRow box" data-id-win="53">53</div>
+                                <div class="boxRow box" data-id-win="52">52</div>
+                                <div class="boxRow box" data-id="51">51</div>
+                            </div>
+                            <div class="ludo__tracks-2--rows-3">
+                                <div class="boxRow box" data-id="45">45</div>
+                                <div class="boxRow box" data-id="46">46</div>
+                                <div class="boxRow box" data-id="47">47</div>
+                                <div class="boxRow box" data-id="48">48</div>
+                                <div class="boxRow box" data-id="49">49</div>
+                                <div class="boxRow box" data-id="50">50</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ludo__tracks-3">
+                        <div class="ludo__tracks-3--rows">
+                            <div class="ludo__tracks-3--rows-1">
+                                <div class="boxCol box" data-id="13">13</div>
+                                <div class="boxCol box" data-id="14">14</div>
+                                <div class="boxCol box" data-id="15">15</div>
+                                <div class="boxCol box" data-id="16">16</div>
+                                <div class="boxCol box" data-id="17">17</div>
+                                <div class="boxCol box" data-id="18">18</div>
+                            </div>
+                            <div class="ludo__tracks-3--rows-2">
+                                <div class="boxCol box" data-id="12">12</div>
+                                <div class="boxCol box" data-id-win="13">13</div>
+                                <div class="boxCol box" data-id-win="14">14</div>
+                                <div class="boxCol box" data-id-win="15">15</div>
+                                <div class="boxCol box" data-id-win="16">16</div>
+                                <div class="boxCol box" data-id-win="17">17</div>
+                            </div>
+                            <div class="ludo__tracks-3--rows-3">
+                                <div class="boxCol box" data-id="11">11</div>
+                                <div class="boxCol box" data-id="10">10</div>
+                                <div class="boxCol box" data-id="9">9</div>
+                                <div class="boxCol box" data-id="8">8</div>
+                                <div class="boxCol box" data-id="7">7</div>
+                                <div class="boxCol box" data-id="6">6</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ludo__tracks-4">
+                        <div class="ludo__tracks-4--rows">
+                            <div class="ludo__tracks-4--rows-1">
+                                <div class="boxCol box" data-id="32">32</div>
+                                <div class="boxCol box" data-id="33">33</div>
+                                <div class="boxCol box" data-id="34">34</div>
+                                <div class="boxCol box" data-id="35">35</div>
+                                <div class="boxCol box" data-id="36">36</div>
+                                <div class="boxCol box" data-id="37">37</div>
+                            </div>
+                            <div class="ludo__tracks-4--rows-2">
+                                <div class="boxCol box" data-id-win="43">43</div>
+                                <div class="boxCol box" data-id-win="42">42</div>
+                                <div class="boxCol box" data-id-win="41">41</div>
+                                <div class="boxCol box" data-id-win="40">40</div>
+                                <div class="boxCol box" data-id-win="39">39</div>
+                                <div class="boxCol box" data-id="38">38</div>
+                            </div>
+                            <div class="ludo__tracks-4--rows-3">
+                                <div class="boxCol box" data-id="44">44</div>
+                                <div class="boxCol box" data-id="43">43</div>
+                                <div class="boxCol box" data-id="42">42</div>
+                                <div class="boxCol box" data-id="41">41</div>
+                                <div class="boxCol box" data-id="40">40</div>
+                                <div class="boxCol box" data-id="39">39</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

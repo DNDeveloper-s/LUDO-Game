@@ -1,0 +1,305 @@
+/*
+0 - 600px:      Phone
+600 - 900px:    Tablet portrait
+900 - 1200px:   Tablet landscape
+[1200 - 1800] is where our normal styles apply
+1800px + :      Big desktop
+
+$breakpoint arguement choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+ORDER: Base + typography > general layout + grid > page layout > components
+
+1em = 16px
+*/
+/*
+0 - 600px:      Phone
+600 - 900px:    Tablet portrait
+900 - 1200px:   Tablet landscape
+[1200 - 1800] is where our normal styles apply
+1800px + :      Big desktop
+
+$breakpoint arguement choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+ORDER: Base + typography > general layout + grid > page layout > components
+
+1em = 16px
+*/
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.ludo {
+  position: relative;
+  width: 100vw;
+  height: 120vh;
+  background-image: linear-gradient(to right, #ff4348 0%, #ff1e64 100%);
+}
+.ludo__body {
+  width: 110vh;
+  height: 100vh;
+  background: #fff;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ludo__container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.ludo__players {
+  width: 100%;
+  height: 100%;
+}
+.ludo__players--home {
+  width: 100%;
+  height: 100%;
+}
+.ludo__players--home * {
+  width: 40%;
+  height: 40%;
+  display: inline-block;
+  position: absolute;
+}
+.ludo__players--home-1 {
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  background: #00ff01;
+}
+.ludo__players--home-1 > * {
+  position: relative;
+  border: 1px solid black;
+  width: 120px;
+  height: 120px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+.ludo__players--home-2 {
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  background: #41a2ff;
+}
+.ludo__players--home-2 > * {
+  position: relative;
+  border: 1px solid black;
+  width: 120px;
+  height: 120px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+.ludo__players--home-3 {
+  bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  background: #fe0000;
+}
+.ludo__players--home-3 > * {
+  position: relative;
+  border: 1px solid black;
+  width: 120px;
+  height: 120px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+.ludo__players--home-4 {
+  bottom: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  background: #ffff00;
+}
+.ludo__players--home-4 > * {
+  position: relative;
+  border: 1px solid black;
+  width: 120px;
+  height: 120px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+.ludo__tracks {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+.ludo__tracks > * {
+  position: absolute;
+}
+.ludo__tracks-1 {
+  top: 0;
+  left: 50%;
+  width: 20.05%;
+  height: 40.1%;
+  transform: translateX(-50%);
+}
+.ludo__tracks-1--rows {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.ludo__tracks-1--rows-1, .ludo__tracks-1--rows-2, .ludo__tracks-1--rows-3 {
+  position: relative;
+  width: 33.3333333333%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.ludo__tracks-1--rows [data-id-win] {
+  background: #41a2ff;
+}
+.ludo__tracks-1--rows [data-id="27"] {
+  background: #41a2ff;
+}
+.ludo__tracks-2 {
+  bottom: 0;
+  width: 20.05%;
+  height: 40.1%;
+  transform: translateX(-50%);
+  left: 50%;
+}
+.ludo__tracks-2--rows {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.ludo__tracks-2--rows-1, .ludo__tracks-2--rows-2, .ludo__tracks-2--rows-3 {
+  position: relative;
+  width: 33.3333333333%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.ludo__tracks-2--rows [data-id-win] {
+  background: #fe0000;
+}
+.ludo__tracks-2--rows [data-id="1"] {
+  background: #fe0000;
+}
+.ludo__tracks-3 {
+  top: 50%;
+  height: 20.05%;
+  width: 40.1%;
+  transform: translateY(-50%);
+}
+.ludo__tracks-3--rows {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.ludo__tracks-3--rows-1, .ludo__tracks-3--rows-2, .ludo__tracks-3--rows-3 {
+  position: relative;
+  width: 100%;
+  height: 33.3333333333%;
+  display: flex;
+}
+.ludo__tracks-3--rows [data-id-win] {
+  background: #00ff01;
+}
+.ludo__tracks-3--rows [data-id="14"] {
+  background: #00ff01;
+}
+.ludo__tracks-4 {
+  top: 50%;
+  right: 0;
+  height: 20.05%;
+  width: 40.1%;
+  transform: translateY(-50%);
+}
+.ludo__tracks-4--rows {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.ludo__tracks-4--rows-1, .ludo__tracks-4--rows-2, .ludo__tracks-4--rows-3 {
+  position: relative;
+  width: 100%;
+  height: 33.3333333333%;
+  display: flex;
+}
+.ludo__tracks-4--rows [data-id-win] {
+  background: #ffff00;
+}
+.ludo__tracks-4--rows [data-id="40"] {
+  background: #ffff00;
+}
+
+.boxRow {
+  position: relative;
+  height: calc(100% / 6);
+  width: 100%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.boxCol {
+  position: relative;
+  width: calc(100% / 6);
+  height: 100%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+#pawn,
+#paw {
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: darkgrey;
+  border: 3px solid white;
+  z-index: 100000;
+}
+
+#pawn {
+  position: absolute;
+}
+
+/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,306 @@
+@import "../abstracts/mixins";
+
+// #41a2ff
+// #fe0000
+// #00ff01
+// #ffff00
+
+* {
+  margin: 0;
+  padding: 0;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.ludo {
+  position: relative;
+  width: 100vw;
+  height: 120vh;
+  background-image: linear-gradient(to right, #ff4348 0%, #ff1e64 100%);
+
+  &__body {
+    width: 110vh;
+    height: 100vh;
+    background: #fff;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 0 20px 10px rgba(0,0,0,0.3);
+
+    @include absCenter();
+   }
+
+  &__container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  &__players {
+    width: 100%;
+    height: 100%;
+
+    &--home {
+      width: 100%;
+      height: 100%;
+
+      * {
+        width: 40%;
+        height: 40%;
+        display: inline-block;
+        position: absolute;
+      }
+
+      &-1 {
+        top: 0;
+        left: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+        background: #00ff01;
+
+        > * {
+          position: relative;
+          border: 1px solid black;
+          width: 120px;
+          height: 120px;
+          background: #fff;
+          border-radius: 3px;
+          box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+      }
+
+      &-2 {
+        right: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+        background: #41a2ff;
+
+        > * {
+          position: relative;
+          border: 1px solid black;
+          width: 120px;
+          height: 120px;
+          background: #fff;
+          border-radius: 3px;
+          box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+      }
+
+      &-3 {
+        bottom: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+        background: #fe0000;
+
+        > * {
+          position: relative;
+          border: 1px solid black;
+          width: 120px;
+          height: 120px;
+          background: #fff;
+          border-radius: 3px;
+          box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+      }
+
+      &-4 {
+        bottom: 0;
+        right: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+        background: #ffff00;
+
+        > * {
+          position: relative;
+          border: 1px solid black;
+          width: 120px;
+          height: 120px;
+          background: #fff;
+          border-radius: 3px;
+          box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+      }
+    }
+  }
+
+  &__tracks {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+
+    > * {
+      position: absolute;
+    }
+
+    &-1 {
+      top: 0;
+      left: 50%;
+      width: 20.05%;
+      height: 40.1%;
+      transform: translateX(-50%);
+
+      &--rows {
+        width: 100%;
+        height: 100%;
+        display: flex;
+
+        &-1,
+        &-2,
+        &-3 {
+          @include columns();
+
+          display: flex;
+          flex-direction: column;
+        }
+
+        [data-id-win] {
+          background: #41a2ff;
+        }
+
+        [data-id="27"] {
+          background: #41a2ff;
+        }
+      }
+    }
+
+    &-2 {
+      bottom: 0;
+      width: 20.05%;
+      height: 40.1%;
+      transform: translateX(-50%);
+      left: 50%;
+
+      &--rows {
+        width: 100%;
+        height: 100%;
+        display: flex;
+
+        &-1,
+        &-2,
+        &-3 {
+          @include columns();
+
+          display: flex;
+          flex-direction: column;
+        }
+
+        [data-id-win] {
+           background: #fe0000;
+        }
+
+        [data-id="1"] {
+            background: #fe0000;
+        }
+      }
+    }
+
+    &-3 {
+      top: 50%;
+      height: 20.05%;
+      width: 40.1%;
+      transform: translateY(-50%);
+
+      &--rows {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        &-1,
+        &-2,
+        &-3 {
+          @include rows();
+
+          display: flex;
+        }
+
+        [data-id-win] {
+          background: #00ff01;
+        }
+
+        [data-id="14"] {
+          background: #00ff01;
+        }
+      }
+    }
+
+    &-4 {
+      top: 50%;
+      right: 0;
+      height: 20.05%;
+      width: 40.1%;
+      transform: translateY(-50%);
+
+      &--rows {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        &-1,
+        &-2,
+        &-3 {
+          @include rows();
+
+          display: flex;
+        }
+
+        [data-id-win] {
+          background: #ffff00;
+        }
+
+        [data-id="40"] {
+          background: #ffff00;
+        }
+      }
+    }
+  }
+}
+
+.boxRow {
+  position: relative;
+  height: calc(100% / 6);
+  width: 100%;
+  border: 1px solid black;
+
+  @include flexCenter();
+}
+
+.boxCol {
+  position: relative;
+  width: calc(100% / 6);
+  height: 100%;
+  border: 1px solid black;
+
+  @include flexCenter();
+}
+
+#pawn,
+#paw{
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: darkgrey;
+  border: 3px solid white;
+  z-index: 100000;
+ }
+
+#pawn {
+  position: absolute;
+}
