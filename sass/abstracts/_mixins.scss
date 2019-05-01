@@ -34,6 +34,16 @@
     font-size: 14px;
 }
 
+@mixin data-place {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    transition: 400ms;
+}
+
 // MEDIA QUERY MANAGER
 /*
 0 - 600px:      Phone
