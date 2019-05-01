@@ -42,12 +42,10 @@ body {
   }
 
   &__players {
-    width: 100%;
-    height: 100%;
+
 
     &--home {
-      width: 100%;
-      height: 100%;
+
 
       * {
         width: 40%;
@@ -65,14 +63,18 @@ body {
         justify-items: center;
         background: #00ff01;
 
-        > * {
+        > [data-place] {
           position: relative;
-          border: 1px solid black;
           width: 120px;
           height: 120px;
           background: #fff;
           border-radius: 3px;
-          box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+          box-shadow: 0 0 10px rgba(0,0,0,0.3);
+          transition: 400ms;
+
+          &:hover {
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+          }
         }
       }
 
@@ -86,12 +88,11 @@ body {
 
         > * {
           position: relative;
-          border: 1px solid black;
           width: 120px;
           height: 120px;
           background: #fff;
           border-radius: 3px;
-          box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+          box-shadow: 0 0 10px rgba(0,0,0,0.3);
         }
       }
 
@@ -105,12 +106,11 @@ body {
 
         > * {
           position: relative;
-          border: 1px solid black;
           width: 120px;
           height: 120px;
           background: #fff;
           border-radius: 3px;
-          box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+          box-shadow: 0 0 10px rgba(0,0,0,0.3);
         }
       }
 
@@ -125,25 +125,26 @@ body {
 
         > * {
           position: relative;
-          border: 1px solid black;
           width: 120px;
           height: 120px;
           background: #fff;
           border-radius: 3px;
-          box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+          box-shadow: 0 0 10px rgba(0,0,0,0.3);
         }
       }
     }
   }
 
   &__tracks {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
+    //width: 100%;
+    //height: 100%;
+    //position: absolute;
+    //top: 0;
+    //z-index: -1;
 
     > * {
       position: absolute;
+      z-index: 1;
     }
 
     &-1 {
