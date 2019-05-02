@@ -21,6 +21,7 @@ $yellow: #ffff00;
 
 body {
   overflow-x: hidden;
+  font-family: 'sans-serf';
 }
 
 .ludo {
@@ -303,4 +304,7 @@ body {
   z-index: 999999999999999999;
 
   @include absCenter();
+  display: flex;
+  justify-content: center;
+  align-items: center;
  }

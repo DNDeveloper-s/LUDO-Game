@@ -42,6 +42,7 @@ ORDER: Base + typography > general layout + grid > page layout > components
 
 body {
   overflow-x: hidden;
+  font-family: "sans-serf";
 }
 
 .ludo {
@@ -302,6 +303,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .g {
@@ -347,6 +351,7 @@ ORDER: Base + typography > general layout + grid > page layout > components
 
 body {
   overflow-x: hidden;
+  font-family: "sans-serf";
 }
 
 .ludo {
@@ -607,6 +612,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /*# sourceMappingURL=main.css.map */
