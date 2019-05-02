@@ -8,6 +8,16 @@ const b2 = 'pawn-b-2';
 const b3 = 'pawn-b-3';
 const b4 = 'pawn-b-4';
 
+const r1 = 'pawn-r-1';
+const r2 = 'pawn-r-2';
+const r3 = 'pawn-r-3';
+const r4 = 'pawn-r-4';
+
+const y1 = 'pawn-y-1';
+const y2 = 'pawn-y-2';
+const y3 = 'pawn-y-3';
+const y4 = 'pawn-y-4';
+
 const pawnG1 = document.querySelector(`.${g1}`);
 const pawnG2 = document.querySelector(`.${g2}`);
 const pawnG3 = document.querySelector(`.${g3}`);
@@ -17,6 +27,16 @@ const pawnB1 = document.querySelector(`.${b1}`);
 const pawnB2 = document.querySelector(`.${b2}`);
 const pawnB3 = document.querySelector(`.${b3}`);
 const pawnB4 = document.querySelector(`.${b4}`);
+
+const pawnR1 = document.querySelector(`.${r1}`);
+const pawnR2 = document.querySelector(`.${r2}`);
+const pawnR3 = document.querySelector(`.${r3}`);
+const pawnR4 = document.querySelector(`.${r4}`);
+
+const pawnY1 = document.querySelector(`.${y1}`);
+const pawnY2 = document.querySelector(`.${y2}`);
+const pawnY3 = document.querySelector(`.${y3}`);
+const pawnY4 = document.querySelector(`.${y4}`);
 
 const ap1 = document.querySelector('.temp-1');
 const ap2 = document.querySelector('.temp-2');
@@ -37,41 +57,77 @@ ap4.addEventListener('click', function() {
     activePlayer = 'player4';
 });
 
-const pawnR = document.querySelector('.pawn-r-1');
 const box = document.querySelectorAll('.box');
-let num, place, difference = 3, activePlayer;
+let num, place, difference = 1, activePlayer, abortPlayer, con;
 
 let Data = {
     player1: {
         pawnPlace: [null, null, null, null],
         color: 'green',
-        winPos: [false, false, false, false]
+        winPos: [false, false, false, false],
+        winNum: [7, 12, 13, 100],
+        pawn: [
+            {ovlp: false},
+            {ovlp: false},
+            {ovlp: false},
+            {ovlp: false}
+        ],
+        pawnStyle: [g1, g2, g3, g4]
     },
     player2: {
         pawnPlace: [null, null, null, null],
         color: 'blue',
-        winPos: [false, false, false, false]
+        winPos: [false, false, false, false],
+        winNum: [20, 25, 26, 100],
+        pawn: [
+            {ovlp: false},
+            {ovlp: false},
+            {ovlp: false},
+            {ovlp: false}
+        ],
+        pawnStyle: [b1, b2, b3, b4]
     },
     player3: {
         pawnPlace: [null, null, null, null],
         color: 'red',
-        winPos: [false, false, false, false]
+        winPos: [false, false, false, false],
+        winNum: [1, 4, 46, 51, 52, 100],
+        pawn: [
+            {ovlp: false},
+            {ovlp: false},
+            {ovlp: false},
+            {ovlp: false}
+        ],
+        pawnStyle: [r1, r2, r3, r4]
     },
     player4: {
         pawnPlace: [null, null, null, null],
-        color: 'green',
-        winPos: [false, false, false, false]
+        color: 'yellow',
+        winPos: [false, false, false, false],
+        winNum: [33, 38, 39, 100],
+        pawn: [
+            {ovlp: false},
+            {ovlp: false},
+            {ovlp: false},
+            {ovlp: false}
+        ],
+        pawnStyle: [y1, y2, y3, y4]
     }
 };
 
 
 function movePawn(startingPoint, pawn) {
-    let posi = checkWinEntrance(Data[activePlayer].color[0], pawn);
+    let posi = checkWinEntrance({
+        color: Data[activePlayer].color[0],
+        num: Data[activePlayer].winNum
+    }, pawn);
     loopingAround(startingPoint, posi);
 
     const winPos = Data[activePlayer].winPos[pawn[pawn.length - 1] - 1];
+    const winID = `win${Data[activePlayer].color[0]}`;
+
     if(winPos) {
-        Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] = parseInt(place.dataset.wing);
+        Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] = parseInt(place.dataset[winID]);
     } else {
         Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] = parseInt(place.dataset.id);
     }
@@ -79,6 +135,14 @@ function movePawn(startingPoint, pawn) {
     const html = `<div class="clickable-${Data[activePlayer].color[0]}-${pawn[pawn.length - 1]} pawn ${pawn} ${Data[activePlayer].color[0]}">${pawn[pawn.length - 1]}</div>`;
 
     place.insertAdjacentHTML('beforeend', html);
+
+    checkDualPawns('player1', 'player2');
+    checkDualPawns('player1', 'player3');
+    checkDualPawns('player1', 'player4');
+
+    checkDualPawns('player3', 'player2');
+    checkDualPawns('player4', 'player2');
+    checkDualPawns('player4', 'player3');
 }
 
 function firstMovePawn(point, pawn) {
@@ -91,49 +155,33 @@ function firstMovePawn(point, pawn) {
     place.insertAdjacentHTML('beforeend', html);
 }
 
-pawnG1.addEventListener('click', function() {
-    activePlayer = 'player1';
-    firstMovePawn(14, g1);
-    pawnG1.parentElement.removeChild(pawnG1);
-});
-pawnG2.addEventListener('click', function() {
-    activePlayer = 'player1';
-    firstMovePawn(14, g2);
-    pawnG2.parentElement.removeChild(pawnG2);
-});
-pawnG3.addEventListener('click', function() {
-    activePlayer = 'player1';
-    firstMovePawn(14, g3);
-    pawnG3.parentElement.removeChild(pawnG3);
-});
-pawnG4.addEventListener('click', function() {
-    activePlayer = 'player1';
-    firstMovePawn(14, g4);
-    pawnG4.parentElement.removeChild(pawnG4);
-});
+function pawns(pawn, actPlayer, startingPoint, pawnDOM) {
+    pawn.addEventListener('click', function() {
+        activePlayer = actPlayer;
+        firstMovePawn(startingPoint, pawnDOM);
+        pawn.parentElement.removeChild(pawn);
+    });
+}
 
-pawnB1.addEventListener('click', function() {
-    activePlayer = 'player2';
-    firstMovePawn(27, b1);
-    pawnB1.parentElement.removeChild(pawnB1);
-});
-pawnB2.addEventListener('click', function() {
-    activePlayer = 'player2';
-    firstMovePawn(27, b2);
-    pawnB2.parentElement.removeChild(pawnB2);
-});
-pawnB3.addEventListener('click', function() {
-    activePlayer = 'player2';
-    firstMovePawn(27, b3);
-    pawnB3.parentElement.removeChild(pawnB3);
-});
-pawnB4.addEventListener('click', function() {
-    activePlayer = 'player2';
-    firstMovePawn(27, b4);
-    pawnB4.parentElement.removeChild(pawnB4);
-});
+pawns(pawnG1, 'player1', 14, g1);
+pawns(pawnG2, 'player1', 14, g2);
+pawns(pawnG3, 'player1', 14, g3);
+pawns(pawnG4, 'player1', 14, g4);
 
+pawns(pawnB1, 'player2', 27, b1);
+pawns(pawnB2, 'player2', 27, b2);
+pawns(pawnB3, 'player2', 27, b3);
+pawns(pawnB4, 'player2', 27, b4);
 
+pawns(pawnR1, 'player3', 1, r1);
+pawns(pawnR2, 'player3', 1, r2);
+pawns(pawnR3, 'player3', 1, r3);
+pawns(pawnR4, 'player3', 1, r4);
+
+pawns(pawnY1, 'player4', 40, y1);
+pawns(pawnY2, 'player4', 40, y2);
+pawns(pawnY3, 'player4', 40, y3);
+pawns(pawnY4, 'player4', 40, y4);
 
 box.forEach(parentCur => {
     parentCur.addEventListener('click', (e) => {
@@ -186,18 +234,42 @@ function startThis(point, posy) {
 }
 
 
-function checkWinEntrance(color, pawn) {
+function checkWinEntrance({color, num}, pawn) {
     const pos = Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1];
     const winPosy = Data[activePlayer].winPos[pawn[pawn.length - 1] - 1];
-    if(color === 'g') {
+    if(color !== 'r') {
+        if(pos >= num[1]) {
+            Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = true;
+        }
         if(winPosy) {
-            if(pos > 7 && pos < 100) {
-                Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = true;
+            if(pos > num[0] && pos < num[3]) {
+                if(pos >= num[2]) {
+                    Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = true;
+                }
                 return `win${color}`;
             }
         } else {
-            if(pos > 7 && pos < 13) {
-                Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = true;
+            if(pos > num[0] && pos < num[2]) {
+                return `win${color}`;
+            } else {
+                Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = false;
+                return 'id';
+            }
+        }
+    } else {
+        // [1, 4, 46, 51, 52, 100]
+        if(pos >= num[3] || pos >= num[0] && pos < num[1]) {
+            Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = true;
+        }
+        if(winPosy) {
+            if(pos >= num[3] || pos >= num[0] && pos < num[1]) {
+                if(pos >= num[3] || pos >= num[0] && pos < num[1]) {
+                    Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = true;
+                }
+                return `win${color}`;
+            }
+        } else {
+            if(pos > num[2] && pos < num[4]) {
                 return `win${color}`;
             } else {
                 Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = false;
@@ -205,4 +277,47 @@ function checkWinEntrance(color, pawn) {
             }
         }
     }
+}
+
+function checkDualPawns(pl1, pl2) {
+    Data[pl1].winPos.forEach((cur1, ind1) => {
+        Data[pl2].winPos.forEach((cur2, ind2) => {
+            if(!cur1 && !cur2 && Data[pl1].pawnPlace[ind1] !== null && Data[pl2].pawnPlace[ind2] !== null) {
+
+                Data[pl1].pawnPlace.forEach((curL, indL) => {
+                    Data[pl2].pawnPlace.forEach((curS, indS) => {
+                        if(curL !== null && curS !== null && curL === curS) {
+                            let abortPlayer;
+                            activePlayer === `${pl1}` ? abortPlayer = `${pl2}` : abortPlayer = `${pl1}`;
+                            if(activePlayer === pl2) {
+                                con = Data[abortPlayer].pawnPlace.indexOf(curL);
+                            } else if(activePlayer === pl1) {
+                                con = Data[abortPlayer].pawnPlace.indexOf(curS);
+                            }
+                            Data[abortPlayer].pawn[con].ovlp = true;
+                            console.log(`Here is ${abortPlayer} is resetted by ${activePlayer}`);
+                            console.log(`Overlapped by ${activePlayer}`);
+
+                            let pawn = Data[abortPlayer].pawnStyle[con];
+                            resetPawns(pawn);
+                        } else if(curL !== null && curS !== null && curL !== curS) {
+                            activePlayer === `${pl1}` ? abortPlayer = `${pl2}` : abortPlayer = `${pl1}`;
+                            if(activePlayer === pl2) {
+                                con = Data[abortPlayer].pawnPlace.indexOf(curL);
+                            } else if(activePlayer === pl1) {
+                                con = Data[abortPlayer].pawnPlace.indexOf(curS);
+                            }
+                            Data[abortPlayer].pawn[con].ovlp = false;
+                        }
+                    })
+                })
+
+            }
+        })
+    });
+}
+
+function resetPawns(pawn) {
+    const html = `<div class="clickable-${Data[abortPlayer].color[0]}-${pawn[pawn.length - 1]} pawn ${pawn} ${Data[abortPlayer].color[0]}">${pawn[pawn.length - 1]}</div>`;
+    Data[abortPlayer].pawnPlace[con] = null;
 }

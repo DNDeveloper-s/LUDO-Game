@@ -26,7 +26,8 @@ $yellowTr: rgba(255, 255, 0, 0.53);
 
 body {
   overflow-x: hidden;
-  font-family: 'sans-serf';
+  font-family: 'sans-serif';
+  user-select: none;
 }
 
 .ludo {
@@ -176,11 +177,11 @@ body {
           flex-direction: column;
         }
 
-        [data-win="26"],
-        [data-win="27"],
-        [data-win="28"],
-        [data-win="29"],
-        [data-win="30"]{
+        [data-winb="26"],
+        [data-winb="27"],
+        [data-winb="28"],
+        [data-winb="29"],
+        [data-winb="30"]{
           background: $blue;
         }
 
@@ -211,11 +212,11 @@ body {
           flex-direction: column;
         }
 
-        [data-win="52"],
-        [data-win="53"],
-        [data-win="54"],
-        [data-win="55"],
-        [data-win="56"]{
+        [data-winr="52"],
+        [data-winr="1"],
+        [data-winr="2"],
+        [data-winr="3"],
+        [data-winr="4"]{
            background: $red;
         }
 
@@ -280,11 +281,11 @@ body {
           display: flex;
         }
 
-        [data-win="39"],
-        [data-win="40"],
-        [data-win="41"],
-        [data-win="42"],
-        [data-win="43"]{
+        [data-winy="39"],
+        [data-winy="40"],
+        [data-winy="41"],
+        [data-winy="42"],
+        [data-winy="43"]{
           background: $yellow;
         }
 
