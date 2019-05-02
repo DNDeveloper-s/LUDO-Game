@@ -183,7 +183,11 @@ body {
   display: flex;
   flex-direction: column;
 }
-.ludo__tracks-1--rows [data-id-win] {
+.ludo__tracks-1--rows [data-win="26"],
+.ludo__tracks-1--rows [data-win="27"],
+.ludo__tracks-1--rows [data-win="28"],
+.ludo__tracks-1--rows [data-win="29"],
+.ludo__tracks-1--rows [data-win="30"] {
   background: #41a2ff;
 }
 .ludo__tracks-1--rows [data-id="27"] {
@@ -208,7 +212,11 @@ body {
   display: flex;
   flex-direction: column;
 }
-.ludo__tracks-2--rows [data-id-win] {
+.ludo__tracks-2--rows [data-win="52"],
+.ludo__tracks-2--rows [data-win="53"],
+.ludo__tracks-2--rows [data-win="54"],
+.ludo__tracks-2--rows [data-win="55"],
+.ludo__tracks-2--rows [data-win="56"] {
   background: #fe0000;
 }
 .ludo__tracks-2--rows [data-id="1"] {
@@ -232,7 +240,11 @@ body {
   height: 33.3333333333%;
   display: flex;
 }
-.ludo__tracks-3--rows [data-id-win] {
+.ludo__tracks-3--rows [data-wing="13"],
+.ludo__tracks-3--rows [data-wing="14"],
+.ludo__tracks-3--rows [data-wing="15"],
+.ludo__tracks-3--rows [data-wing="16"],
+.ludo__tracks-3--rows [data-wing="17"] {
   background: #00ff01;
 }
 .ludo__tracks-3--rows [data-id="14"] {
@@ -257,7 +269,11 @@ body {
   height: 33.3333333333%;
   display: flex;
 }
-.ludo__tracks-4--rows [data-id-win] {
+.ludo__tracks-4--rows [data-win="39"],
+.ludo__tracks-4--rows [data-win="40"],
+.ludo__tracks-4--rows [data-win="41"],
+.ludo__tracks-4--rows [data-win="42"],
+.ludo__tracks-4--rows [data-win="43"] {
   background: #ffff00;
 }
 .ludo__tracks-4--rows [data-id="40"] {
@@ -275,6 +291,10 @@ body {
   font-family: sans-serif;
   font-weight: 300;
   font-size: 14px;
+}
+
+.box {
+  display: flex;
 }
 
 .boxCol {
@@ -299,6 +319,7 @@ body {
   border: 4px solid lightgrey;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   z-index: 1000000000000000100;
+  cursor: pointer;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -306,6 +327,28 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.temp {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 19999999;
+}
+.temp > * {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: 300ms;
+}
+.temp-1:hover, .temp-2:hover, .temp-3:hover, .temp-4:hover {
+  background: #41a2ff;
 }
 
 .g {
@@ -492,7 +535,11 @@ body {
   display: flex;
   flex-direction: column;
 }
-.ludo__tracks-1--rows [data-id-win] {
+.ludo__tracks-1--rows [data-win="26"],
+.ludo__tracks-1--rows [data-win="27"],
+.ludo__tracks-1--rows [data-win="28"],
+.ludo__tracks-1--rows [data-win="29"],
+.ludo__tracks-1--rows [data-win="30"] {
   background: #41a2ff;
 }
 .ludo__tracks-1--rows [data-id="27"] {
@@ -517,7 +564,11 @@ body {
   display: flex;
   flex-direction: column;
 }
-.ludo__tracks-2--rows [data-id-win] {
+.ludo__tracks-2--rows [data-win="52"],
+.ludo__tracks-2--rows [data-win="53"],
+.ludo__tracks-2--rows [data-win="54"],
+.ludo__tracks-2--rows [data-win="55"],
+.ludo__tracks-2--rows [data-win="56"] {
   background: #fe0000;
 }
 .ludo__tracks-2--rows [data-id="1"] {
@@ -541,7 +592,11 @@ body {
   height: 33.3333333333%;
   display: flex;
 }
-.ludo__tracks-3--rows [data-id-win] {
+.ludo__tracks-3--rows [data-wing="13"],
+.ludo__tracks-3--rows [data-wing="14"],
+.ludo__tracks-3--rows [data-wing="15"],
+.ludo__tracks-3--rows [data-wing="16"],
+.ludo__tracks-3--rows [data-wing="17"] {
   background: #00ff01;
 }
 .ludo__tracks-3--rows [data-id="14"] {
@@ -566,7 +621,11 @@ body {
   height: 33.3333333333%;
   display: flex;
 }
-.ludo__tracks-4--rows [data-id-win] {
+.ludo__tracks-4--rows [data-win="39"],
+.ludo__tracks-4--rows [data-win="40"],
+.ludo__tracks-4--rows [data-win="41"],
+.ludo__tracks-4--rows [data-win="42"],
+.ludo__tracks-4--rows [data-win="43"] {
   background: #ffff00;
 }
 .ludo__tracks-4--rows [data-id="40"] {
@@ -584,6 +643,10 @@ body {
   font-family: sans-serif;
   font-weight: 300;
   font-size: 14px;
+}
+
+.box {
+  display: flex;
 }
 
 .boxCol {
@@ -608,6 +671,7 @@ body {
   border: 4px solid lightgrey;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   z-index: 1000000000000000100;
+  cursor: pointer;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -615,6 +679,28 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.temp {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 19999999;
+}
+.temp > * {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: 300ms;
+}
+.temp-1:hover, .temp-2:hover, .temp-3:hover, .temp-4:hover {
+  background: #41a2ff;
 }
 
 /*# sourceMappingURL=main.css.map */

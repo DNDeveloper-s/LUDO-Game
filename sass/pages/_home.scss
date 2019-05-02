@@ -10,6 +10,11 @@ $red: #fe0000;
 $green: #00ff01;
 $yellow: #ffff00;
 
+$blueTr: rgba(65, 162, 255, 0.51);
+$redTr: rgba(254, 0, 0, 0.59);
+$greenTr: rgba(0, 255, 1, 0.56);
+$yellowTr: rgba(255, 255, 0, 0.53);
+
 * {
   margin: 0;
   padding: 0;
@@ -171,7 +176,11 @@ body {
           flex-direction: column;
         }
 
-        [data-id-win] {
+        [data-win="26"],
+        [data-win="27"],
+        [data-win="28"],
+        [data-win="29"],
+        [data-win="30"]{
           background: $blue;
         }
 
@@ -202,7 +211,11 @@ body {
           flex-direction: column;
         }
 
-        [data-id-win] {
+        [data-win="52"],
+        [data-win="53"],
+        [data-win="54"],
+        [data-win="55"],
+        [data-win="56"]{
            background: $red;
         }
 
@@ -232,7 +245,11 @@ body {
           display: flex;
         }
 
-        [data-id-win] {
+        [data-wing="13"],
+        [data-wing="14"],
+        [data-wing="15"],
+        [data-wing="16"],
+        [data-wing="17"]{
           background: $green;
         }
 
@@ -263,7 +280,11 @@ body {
           display: flex;
         }
 
-        [data-id-win] {
+        [data-win="39"],
+        [data-win="40"],
+        [data-win="41"],
+        [data-win="42"],
+        [data-win="43"]{
           background: $yellow;
         }
 
@@ -284,6 +305,10 @@ body {
   @include flexCenter();
 }
 
+.box {
+  display: flex;
+}
+
 .boxCol {
   position: relative;
   width: calc(100% / 6);
@@ -302,9 +327,38 @@ body {
   border: 4px solid lightgrey;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
   z-index: 999999999999999999;
+  cursor: pointer;
 
   @include absCenter();
   display: flex;
   justify-content: center;
   align-items: center;
  }
+
+
+.temp {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 19999999;
+
+  > * {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: 300ms;
+  }
+
+  &-1:hover,
+  &-2:hover,
+  &-3:hover,
+  &-4:hover {
+    background: $blue;
+  }
+}
