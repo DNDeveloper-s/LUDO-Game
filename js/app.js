@@ -44,33 +44,37 @@ const pawnY4 = document.querySelector(`.${y4}`);
 /**
  * Testing Purposes
  */
+//
+// document.querySelector('.ludo__container').addEventListener('click', e => {
+//     console.log(e.target);
+// });
 
-const ap1 = document.querySelector('.temp-1');
-const ap2 = document.querySelector('.temp-2');
-const ap3 = document.querySelector('.temp-3');
-const ap4 = document.querySelector('.temp-4');
+// const ap1 = document.querySelector('.temp-1');
+// const ap2 = document.querySelector('.temp-2');
+// const ap3 = document.querySelector('.temp-3');
+// const ap4 = document.querySelector('.temp-4');
 const ap5 = document.querySelector('.temp-5');
-
-
-ap1.addEventListener('click', function() {
-    activePlayer = 'player1';
-});
-ap2.addEventListener('click', function() {
-    activePlayer = 'player2';
-});
-ap3.addEventListener('click', function() {
-    activePlayer = 'player3';
-});
-ap4.addEventListener('click', function() {
-    activePlayer = 'player4';
-});
+//
+//
+// ap1.addEventListener('click', function() {
+//     activePlayer = 'player1';
+// });
+// ap2.addEventListener('click', function() {
+//     activePlayer = 'player2';
+// });
+// ap3.addEventListener('click', function() {
+//     activePlayer = 'player3';
+// });
+// ap4.addEventListener('click', function() {
+//     activePlayer = 'player4';
+// });
 
 /**
  * Main Code Starts here
  */
 
 const box = document.querySelectorAll('.box');
-let num, place, difference = 1, activePlayer, abortPlayer, con;
+let num, place, count = null, activePlayer = 'player1', abortPlayer, con;
 
 let Data = {
     player1: {
@@ -89,7 +93,10 @@ let Data = {
         pawnStr: ['g1', 'g2', 'g3', 'g4'],
         startingPoint: 14,
         winPlace: 18,
-        difference: null
+        difference: null,
+        diceNos: [null, null, null],
+        overlapped: false,
+        sixCount: null
     },
     player2: {
         pawnPlace: [null, null, null, null],
@@ -107,7 +114,10 @@ let Data = {
         pawnStr: ['b1', 'b2', 'b3', 'b4'],
         startingPoint: 27,
         winPlace: 31,
-        difference: null
+        difference: null,
+        diceNos: [null, null, null],
+        overlapped: false,
+        sixCount: null
     },
     player3: {
         pawnPlace: [null, null, null, null],
@@ -125,7 +135,10 @@ let Data = {
         pawnStr: ['r1', 'r2', 'r3', 'r4'],
         startingPoint: 1,
         winPlace: 5,
-        difference: null
+        difference: null,
+        diceNos: [null, null, null],
+        overlapped: false,
+        sixCount: null
     },
     player4: {
         pawnPlace: [null, null, null, null],
@@ -143,7 +156,10 @@ let Data = {
         pawnStr: ['y1', 'y2', 'y3', 'y4'],
         startingPoint: 40,
         winPlace: 44,
-        difference: null
+        difference: null,
+        diceNos: [null, null, null],
+        overlapped: false,
+        sixCount: null
     }
 };
 
@@ -191,9 +207,32 @@ function firstMovePawn(point, pawn) {
 function pawns(pawn, actPlayer, startingPoint, pawnDOM) {
     home.addEventListener('click', function(e) {
         if(e.target === pawn) {
-            activePlayer = actPlayer;
-            firstMovePawn(startingPoint, pawnDOM);
-            pawn.style.display = 'none';
+            // activePlayer = actPlayer;
+            if(actPlayer === activePlayer) {
+                if(Data[activePlayer].difference !== null && (Data[activePlayer].difference === 6 || Data[activePlayer].difference === 1 || Data[activePlayer].difference > 6 || Data[activePlayer].overlapped)) {
+                    if(Data[activePlayer].difference >= 6 || Data[activePlayer].overlapped) {
+                        if(Data[activePlayer].difference > 6) {
+                            const startFromHere = Data[activePlayer].difference - 6;
+                            firstMovePawn(startingPoint + startFromHere, pawnDOM);
+                            changePlayer();
+                        }else{
+                                firstMovePawn(startingPoint, pawnDOM);
+                        }
+                        pawn.style.display = 'none';
+                        Data[activePlayer].difference = null;
+                        Data[activePlayer].diceNos[0] = null;
+                        Data[activePlayer].diceNos[1] = null;
+                        Data[activePlayer].diceNos[2] = null;
+                    } else {
+                        firstMovePawn(startingPoint, pawnDOM);
+                        pawn.style.display = 'none';
+                        if(Data[activePlayer].overlapped) {
+                            Data[activePlayer].overlapped = false;
+                        }
+                        changePlayer();
+                    }
+                }
+            }
         }
     });
 }
@@ -218,25 +257,56 @@ pawns(pawnY2, 'player4', 40, y2);
 pawns(pawnY3, 'player4', 40, y3);
 pawns(pawnY4, 'player4', 40, y4);
 
+function changePlayer() {
+    Data[activePlayer].difference = null;
+    Data[activePlayer].diceNos[0] = null;
+    Data[activePlayer].diceNos[1] = null;
+    Data[activePlayer].diceNos[2] = null;
+    if(activePlayer === 'player1') {
+        activePlayer = 'player2';
+    } else if(activePlayer === 'player2') {
+        activePlayer = 'player3';
+    } else if(activePlayer === 'player3') {
+        activePlayer = 'player4';
+    } else if(activePlayer === 'player4') {
+        activePlayer = 'player1';
+    }
+    Data.player1.overlapped = false;
+    Data.player2.overlapped = false;
+    Data.player3.overlapped = false;
+    Data.player4.overlapped = false;
+    console.log(activePlayer);
+}
+
+function clickableElements(event, i, j) {
+    event.srcElement.parentElement.removeChild(event.target);
+    movePawn(Data[activePlayer].pawnPlace[i], `${Data[activePlayer].color[i]}${j}`);
+
+    if(Data[activePlayer].difference !== null && !Data[activePlayer].overlapped) {
+        changePlayer();
+    } else {
+        Data.player1.overlapped = false;
+        Data.player2.overlapped = false;
+        Data.player3.overlapped = false;
+        Data.player4.overlapped = false;
+    }
+}
+
 box.forEach(parentCur => {
     parentCur.addEventListener('click', (e) => {
         const classes = e.srcElement.classList;
         classes.forEach(cur => {
             if(cur === `clickable-${Data[activePlayer].color[0]}-1`) {
-                e.srcElement.parentElement.removeChild(e.target);
-                movePawn(Data[activePlayer].pawnPlace[0], `${Data[activePlayer].color[0]}1`);
+                clickableElements(e, 0, 1);
             } else
             if(cur === `clickable-${Data[activePlayer].color[0]}-2`) {
-                e.srcElement.parentElement.removeChild(e.target);
-                movePawn(Data[activePlayer].pawnPlace[1], `${Data[activePlayer].color[0]}2`);
+                clickableElements(e, 1, 2);
             } else
             if(cur === `clickable-${Data[activePlayer].color[0]}-3`) {
-                e.srcElement.parentElement.removeChild(e.target);
-                movePawn(Data[activePlayer].pawnPlace[2], `${Data[activePlayer].color[0]}3`);
+                clickableElements(e, 2, 3);
             } else
             if(cur === `clickable-${Data[activePlayer].color[0]}-4`) {
-                e.srcElement.parentElement.removeChild(e.target);
-                movePawn(Data[activePlayer].pawnPlace[3], `${Data[activePlayer].color[0]}4`);
+                clickableElements(e, 3, 4);
             }
         })
     });
@@ -328,7 +398,8 @@ function checkDualPawns(pl1, pl2) {
                             } else if(activePlayer === pl1) {
                                 con = Data[abortPlayer].pawnPlace.indexOf(curS);
                             }
-                            Data[abortPlayer].pawn[con].ovlp = true;
+                            Data[activePlayer].overlapped = true;
+                            console.log(Data[activePlayer].overlapped);
                             if(curS === 1 || curS === 9 || curS === 14 || curS === 22 || curS === 27 || curS === 35 || curS === 40 || curS === 48) {
 
                             } else {
@@ -341,7 +412,6 @@ function checkDualPawns(pl1, pl2) {
                             } else if(activePlayer === pl1) {
                                 con = Data[abortPlayer].pawnPlace.indexOf(curS);
                             }
-                            Data[abortPlayer].pawn[con].ovlp = false;
                         }
                     })
                 })
@@ -374,29 +444,16 @@ function checkRevolvedPawns(pawn) {
     const winPosy = Data[activePlayer].winPos[pawn[pawn.length - 1] - 1];
 
     if(position >= Data[activePlayer].winPlace && winPosy) {
-        // console.log(`${activePlayer} is winner and the pawn no. ${pawn[pawn.length - 1]}`);
         Data[activePlayer].winPawns[pawn[pawn.length - 1] - 1] = true;
 
         if(Data[activePlayer].winPawns[0] && Data[activePlayer].winPawns[1] && Data[activePlayer].winPawns[2] && Data[activePlayer].winPawns[3]) {
-            // console.log('Its all red');
         }
 
     }
 }
 
-// function createDice() {
-//     for(let i = 1; i < 7; i++) {
-//         const html = `<img class="dice" src="./images/dice-${i}.png" alt="">`;
-//
-//         document.querySelector('.ludo__dice').insertAdjacentHTML('beforeend', html);
-//     }
-// }
-//
-// createDice();
-
 function revolveDice() {
     let number = Math.floor(Math.random() * 6) + 1;
-    console.log(number);
     displayDice(number);
 
     return number;
@@ -407,6 +464,31 @@ function displayDice(n) {
 }
 
 ap5.addEventListener('click', () => {
-    let diff = revolveDice();
-    Data[activePlayer].difference = diff;
+    Data[activePlayer].diceNos[0] = revolveDice();
+
+    if(Data[activePlayer].diceNos[0] === 6) {
+        Data[activePlayer].diceNos[1] = revolveDice();
+    }
+
+    if(Data[activePlayer].diceNos[1] === 6) {
+        Data[activePlayer].diceNos[2] = revolveDice();
+    }
+
+    Data[activePlayer].difference = Data[activePlayer].diceNos[0] + Data[activePlayer].diceNos[1] + Data[activePlayer].diceNos[2];
+
+    console.log(Data[activePlayer].diceNos[0]);
+    console.log(Data[activePlayer].diceNos[1]);
+    console.log(Data[activePlayer].diceNos[2]);
+
+    if(Data[activePlayer].diceNos[2] === 6) {
+        count = 3;
+        Data[activePlayer].sixCount = count;
+    }
+    if(Data[activePlayer].sixCount >= 3) {
+        Data[activePlayer].sixCount = null;
+        changePlayer();
+    }
+    if(Data[activePlayer].pawnPlace[0] === null && Data[activePlayer].pawnPlace[1] === null && Data[activePlayer].pawnPlace[2] === null && Data[activePlayer].pawnPlace[3] === null && Data[activePlayer].difference !== null && Data[activePlayer].diceNos[0] !== 6 && Data[activePlayer].diceNos[0] !== 1) {
+        changePlayer();
+    }
 });

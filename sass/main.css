@@ -72,16 +72,18 @@ body {
 .ludo__dice {
   position: absolute;
   z-index: 10000000000;
+  perspective: 1000px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 .ludo__dice > img {
-  width: 100px;
-  height: 100px;
+  width: 69px;
+  height: 69px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   position: absolute;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -90,11 +92,19 @@ body {
 .ludo__players {
   z-index: -1;
 }
-.ludo__players--home * {
+.ludo__players--home > * {
   width: 40%;
   height: 40%;
   display: inline-block;
   position: absolute;
+}
+.ludo__players--home__place {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: 14px;
 }
 .ludo__players--home-g {
   top: 0;
@@ -304,16 +314,15 @@ body {
   height: calc(100% / 6);
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.box {
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: sans-serif;
   font-weight: 300;
   font-size: 14px;
-}
-
-.box {
-  display: flex;
 }
 
 .boxCol {
@@ -321,12 +330,6 @@ body {
   width: calc(100% / 6);
   height: 100%;
   border: 1px solid rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: sans-serif;
-  font-weight: 300;
-  font-size: 14px;
 }
 
 .pawn {
@@ -336,16 +339,17 @@ body {
   width: 50px;
   height: 50px;
   border: 4px solid lightgrey;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
   z-index: 1000000000000000100;
   cursor: pointer;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 300ms;
+}
+.pawn:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  transform: translateY(2px);
 }
 
 .temp {
@@ -357,16 +361,20 @@ body {
   z-index: 19999999;
 }
 .temp > * {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 300px;
+  height: 60px;
   margin: 0 5px;
   cursor: pointer;
   transition: 300ms;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: #fff;
 }
-.temp-1:hover, .temp-2:hover, .temp-3:hover, .temp-4:hover {
+.temp-5:hover {
   background: #41a2ff;
 }
 
@@ -447,16 +455,18 @@ body {
 .ludo__dice {
   position: absolute;
   z-index: 10000000000;
+  perspective: 1000px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 .ludo__dice > img {
-  width: 100px;
-  height: 100px;
+  width: 69px;
+  height: 69px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   position: absolute;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -465,11 +475,19 @@ body {
 .ludo__players {
   z-index: -1;
 }
-.ludo__players--home * {
+.ludo__players--home > * {
   width: 40%;
   height: 40%;
   display: inline-block;
   position: absolute;
+}
+.ludo__players--home__place {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: 14px;
 }
 .ludo__players--home-g {
   top: 0;
@@ -679,16 +697,15 @@ body {
   height: calc(100% / 6);
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.box {
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: sans-serif;
   font-weight: 300;
   font-size: 14px;
-}
-
-.box {
-  display: flex;
 }
 
 .boxCol {
@@ -696,12 +713,6 @@ body {
   width: calc(100% / 6);
   height: 100%;
   border: 1px solid rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: sans-serif;
-  font-weight: 300;
-  font-size: 14px;
 }
 
 .pawn {
@@ -711,16 +722,17 @@ body {
   width: 50px;
   height: 50px;
   border: 4px solid lightgrey;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
   z-index: 1000000000000000100;
   cursor: pointer;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 300ms;
+}
+.pawn:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  transform: translateY(2px);
 }
 
 .temp {
@@ -732,16 +744,20 @@ body {
   z-index: 19999999;
 }
 .temp > * {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 300px;
+  height: 60px;
   margin: 0 5px;
   cursor: pointer;
   transition: 300ms;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: #fff;
 }
-.temp-1:hover, .temp-2:hover, .temp-3:hover, .temp-4:hover {
+.temp-5:hover {
   background: #41a2ff;
 }
 

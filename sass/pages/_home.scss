@@ -56,14 +56,16 @@ body {
   &__dice {
     position: absolute;
     z-index: 10000000000;
+    perspective: 1000px;
 
     @include absCenter();
 
     > img {
-      width: 100px;
-      height: 100px;
+      width: 69px;
+      height: 69px;
       border: 1px solid rgba(0,0,0,0.3);
       position: absolute;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
 
       @include absCenter();
       //display: none;
@@ -76,12 +78,15 @@ body {
 
     &--home {
 
-
-      * {
+      > * {
         width: 40%;
         height: 40%;
         display: inline-block;
         position: absolute;
+      }
+
+      &__place {
+        @include flexCenter();
       }
 
       &-g {
@@ -321,11 +326,11 @@ body {
   width: 100%;
   border: 1px solid rgba(0,0,0,0.8);
 
-  @include flexCenter();
+  //@include flexCenter();
 }
 
 .box {
-  display: flex;
+  @include flexCenter();
 }
 
 .boxCol {
@@ -333,8 +338,6 @@ body {
   width: calc(100% / 6);
   height: 100%;
   border: 1px solid rgba(0,0,0,0.8);
-
-  @include flexCenter();
 }
 
 .pawn{
@@ -344,16 +347,28 @@ body {
   width: 50px;
   height: 50px;
   border: 4px solid lightgrey;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  box-shadow: 0 0 40px rgba(0,0,0,0.3);
   z-index: 999999999999999999;
   cursor: pointer;
 
-  @include absCenter();
+  //@include absCenter();
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 300ms;
+
+  &:hover {
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    transform: translateY(2px);
+  }
  }
 
+//
+//.boxCol > .pawn,
+//.boxRow > .pawn{
+//  width: 100%;
+//  height: 100%;
+//}
 
 .temp {
   position: absolute;
@@ -364,20 +379,17 @@ body {
   z-index: 19999999;
 
   > * {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 300px;
+    height: 60px;
     margin: 0 5px;
     cursor: pointer;
     transition: 300ms;
+
+    @include flexCenter();
+    color: #fff;
   }
 
-  &-1:hover,
-  &-2:hover,
-  &-3:hover,
-  &-4:hover {
+  &-5:hover {
     background: $blue;
   }
 }
