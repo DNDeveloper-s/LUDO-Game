@@ -25,8 +25,11 @@ const pawnG4 = document.querySelector(`.${g4}`);
 
 const pawnB1 = document.querySelector(`.${b1}`);
 const pawnB2 = document.querySelector(`.${b2}`);
-const pawnB3 = document.querySelector(`.${b3}`);
+let pawnB3 = document.querySelector(`.${b3}`);
 const pawnB4 = document.querySelector(`.${b4}`);
+
+const home = document.querySelector('.ludo__players--home');
+
 
 const pawnR1 = document.querySelector(`.${r1}`);
 const pawnR2 = document.querySelector(`.${r2}`);
@@ -37,6 +40,10 @@ const pawnY1 = document.querySelector(`.${y1}`);
 const pawnY2 = document.querySelector(`.${y2}`);
 const pawnY3 = document.querySelector(`.${y3}`);
 const pawnY4 = document.querySelector(`.${y4}`);
+
+/**
+ * Testing Purposes
+ */
 
 const ap1 = document.querySelector('.temp-1');
 const ap2 = document.querySelector('.temp-2');
@@ -57,6 +64,10 @@ ap4.addEventListener('click', function() {
     activePlayer = 'player4';
 });
 
+/**
+ * Main Code Starts here
+ */
+
 const box = document.querySelectorAll('.box');
 let num, place, difference = 1, activePlayer, abortPlayer, con;
 
@@ -65,53 +76,69 @@ let Data = {
         pawnPlace: [null, null, null, null],
         color: 'green',
         winPos: [false, false, false, false],
-        winNum: [7, 12, 13, 100],
+        winNum: [7, 6, 13, 100],
+        winPawns:[false, false, false, false],
         pawn: [
             {ovlp: false},
             {ovlp: false},
             {ovlp: false},
             {ovlp: false}
         ],
-        pawnStyle: [g1, g2, g3, g4]
+        pawnStyle: [g1, g2, g3, g4],
+        pawnStr: ['g1', 'g2', 'g3', 'g4'],
+        startingPoint: 14,
+        winPlace: 18
     },
     player2: {
         pawnPlace: [null, null, null, null],
         color: 'blue',
         winPos: [false, false, false, false],
-        winNum: [20, 25, 26, 100],
+        winNum: [20, 19, 26, 100],
+        winPawns:[false, false, false, false],
         pawn: [
             {ovlp: false},
             {ovlp: false},
             {ovlp: false},
             {ovlp: false}
         ],
-        pawnStyle: [b1, b2, b3, b4]
+        pawnStyle: [b1, b2, b3, b4],
+        pawnStr: ['b1', 'b2', 'b3', 'b4'],
+        startingPoint: 27,
+        winPlace: 31
     },
     player3: {
         pawnPlace: [null, null, null, null],
         color: 'red',
         winPos: [false, false, false, false],
-        winNum: [1, 4, 46, 51, 52, 100],
+        winNum: [1, 10, 46, 45, 52, 100],
+        winPawns:[false, false, false, false],
         pawn: [
             {ovlp: false},
             {ovlp: false},
             {ovlp: false},
             {ovlp: false}
         ],
-        pawnStyle: [r1, r2, r3, r4]
+        pawnStyle: [r1, r2, r3, r4],
+        pawnStr: ['r1', 'r2', 'r3', 'r4'],
+        startingPoint: 1,
+        winPlace: 5
     },
     player4: {
         pawnPlace: [null, null, null, null],
         color: 'yellow',
         winPos: [false, false, false, false],
-        winNum: [33, 38, 39, 100],
+        winNum: [33, 32, 39, 100],
+        winPawns:[false, false, false, false],
         pawn: [
             {ovlp: false},
             {ovlp: false},
             {ovlp: false},
             {ovlp: false}
         ],
-        pawnStyle: [y1, y2, y3, y4]
+        pawnStyle: [y1, y2, y3, y4],
+        pawnStr: ['y1', 'y2', 'y3', 'y4'],
+        startingPoint: 40,
+        winPlace: 44
     }
 };
 
@@ -135,7 +162,6 @@ function movePawn(startingPoint, pawn) {
     const html = `<div class="clickable-${Data[activePlayer].color[0]}-${pawn[pawn.length - 1]} pawn ${pawn} ${Data[activePlayer].color[0]}">${pawn[pawn.length - 1]}</div>`;
 
     place.insertAdjacentHTML('beforeend', html);
-
     checkDualPawns('player1', 'player2');
     checkDualPawns('player1', 'player3');
     checkDualPawns('player1', 'player4');
@@ -143,6 +169,8 @@ function movePawn(startingPoint, pawn) {
     checkDualPawns('player3', 'player2');
     checkDualPawns('player4', 'player2');
     checkDualPawns('player4', 'player3');
+
+    checkRevolvedPawns(pawn);
 }
 
 function firstMovePawn(point, pawn) {
@@ -156,10 +184,12 @@ function firstMovePawn(point, pawn) {
 }
 
 function pawns(pawn, actPlayer, startingPoint, pawnDOM) {
-    pawn.addEventListener('click', function() {
-        activePlayer = actPlayer;
-        firstMovePawn(startingPoint, pawnDOM);
-        pawn.parentElement.removeChild(pawn);
+    home.addEventListener('click', function(e) {
+        if(e.target === pawn) {
+            activePlayer = actPlayer;
+            firstMovePawn(startingPoint, pawnDOM);
+            pawn.style.display = 'none';
+        }
     });
 }
 
@@ -287,7 +317,6 @@ function checkDualPawns(pl1, pl2) {
                 Data[pl1].pawnPlace.forEach((curL, indL) => {
                     Data[pl2].pawnPlace.forEach((curS, indS) => {
                         if(curL !== null && curS !== null && curL === curS) {
-                            let abortPlayer;
                             activePlayer === `${pl1}` ? abortPlayer = `${pl2}` : abortPlayer = `${pl1}`;
                             if(activePlayer === pl2) {
                                 con = Data[abortPlayer].pawnPlace.indexOf(curL);
@@ -295,11 +324,11 @@ function checkDualPawns(pl1, pl2) {
                                 con = Data[abortPlayer].pawnPlace.indexOf(curS);
                             }
                             Data[abortPlayer].pawn[con].ovlp = true;
-                            console.log(`Here is ${abortPlayer} is resetted by ${activePlayer}`);
-                            console.log(`Overlapped by ${activePlayer}`);
+                            if(curS === 1 || curS === 9 || curS === 14 || curS === 22 || curS === 27 || curS === 35 || curS === 40 || curS === 48) {
 
-                            let pawn = Data[abortPlayer].pawnStyle[con];
-                            resetPawns(pawn);
+                            } else {
+                                resetPawns();
+                            }
                         } else if(curL !== null && curS !== null && curL !== curS) {
                             activePlayer === `${pl1}` ? abortPlayer = `${pl2}` : abortPlayer = `${pl1}`;
                             if(activePlayer === pl2) {
@@ -311,13 +340,41 @@ function checkDualPawns(pl1, pl2) {
                         }
                     })
                 })
-
             }
         })
     });
 }
 
-function resetPawns(pawn) {
-    const html = `<div class="clickable-${Data[abortPlayer].color[0]}-${pawn[pawn.length - 1]} pawn ${pawn} ${Data[abortPlayer].color[0]}">${pawn[pawn.length - 1]}</div>`;
+function resetPawns() {
     Data[abortPlayer].pawnPlace[con] = null;
+    const caughtPawn = `pawn${Data[abortPlayer].color[0].toUpperCase()}${con + 1}`;
+    eval(caughtPawn).style.display = 'flex';
+    place.children[0].parentElement.removeChild(place.children[0]);
+}
+
+function createElement(start, color, end) {
+    for(let i = start; i < end; i++) {
+        const html = `<div class="boxCol box none" data-win${color}="${i}">${i}</div>`;
+        document.querySelector('.wastes').insertAdjacentHTML('beforeend', html);
+    }
+}
+
+createElement(18, 'g', 24);
+createElement(30, 'b', 36);
+createElement(43, 'y', 49);
+createElement(5, 'r', 11);
+
+function checkRevolvedPawns(pawn) {
+    const position = Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1];
+    const winPosy = Data[activePlayer].winPos[pawn[pawn.length - 1] - 1];
+
+    if(position >= Data[activePlayer].winPlace && winPosy) {
+        console.log(`${activePlayer} is winner and the pawn no. ${pawn[pawn.length - 1]}`);
+        Data[activePlayer].winPawns[pawn[pawn.length - 1] - 1] = true;
+
+        if(Data[activePlayer].winPawns[0] && Data[activePlayer].winPawns[1] && Data[activePlayer].winPawns[2] && Data[activePlayer].winPawns[3]) {
+            console.log('Its all red');
+        }
+
+    }
 }

@@ -78,7 +78,7 @@ body {
   display: inline-block;
   position: absolute;
 }
-.ludo__players--home-1 {
+.ludo__players--home-g {
   top: 0;
   left: 0;
   display: grid;
@@ -88,7 +88,7 @@ body {
   justify-self: center;
   background: #00ff01;
 }
-.ludo__players--home-1 > [data-place] {
+.ludo__players--home-g > [data-place] {
   position: relative;
   width: 110px;
   height: 110px;
@@ -97,10 +97,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition: 400ms;
 }
-.ludo__players--home-1 > [data-place]:hover {
+.ludo__players--home-g > [data-place]:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
-.ludo__players--home-2 {
+.ludo__players--home-b {
   right: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -108,7 +108,7 @@ body {
   justify-items: center;
   background: #41a2ff;
 }
-.ludo__players--home-2 > [data-place] {
+.ludo__players--home-b > [data-place] {
   position: relative;
   width: 110px;
   height: 110px;
@@ -117,10 +117,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition: 400ms;
 }
-.ludo__players--home-2 > [data-place]:hover {
+.ludo__players--home-b > [data-place]:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
-.ludo__players--home-3 {
+.ludo__players--home-r {
   bottom: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -128,7 +128,7 @@ body {
   justify-items: center;
   background: #fe0000;
 }
-.ludo__players--home-3 > [data-place] {
+.ludo__players--home-r > [data-place] {
   position: relative;
   width: 110px;
   height: 110px;
@@ -137,10 +137,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition: 400ms;
 }
-.ludo__players--home-3 > [data-place]:hover {
+.ludo__players--home-r > [data-place]:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
-.ludo__players--home-4 {
+.ludo__players--home-y {
   bottom: 0;
   right: 0;
   display: grid;
@@ -149,7 +149,7 @@ body {
   justify-items: center;
   background: #ffff00;
 }
-.ludo__players--home-4 > [data-place] {
+.ludo__players--home-y > [data-place] {
   position: relative;
   width: 110px;
   height: 110px;
@@ -158,7 +158,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition: 400ms;
 }
-.ludo__players--home-4 > [data-place]:hover {
+.ludo__players--home-y > [data-place]:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 .ludo__tracks > * {
@@ -350,6 +350,10 @@ body {
 }
 .temp-1:hover, .temp-2:hover, .temp-3:hover, .temp-4:hover {
   background: #41a2ff;
+}
+
+.none {
+  display: none;
 }
 
 .g {
@@ -431,7 +435,7 @@ body {
   display: inline-block;
   position: absolute;
 }
-.ludo__players--home-1 {
+.ludo__players--home-g {
   top: 0;
   left: 0;
   display: grid;
@@ -441,7 +445,7 @@ body {
   justify-self: center;
   background: #00ff01;
 }
-.ludo__players--home-1 > [data-place] {
+.ludo__players--home-g > [data-place] {
   position: relative;
   width: 110px;
   height: 110px;
@@ -450,10 +454,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition: 400ms;
 }
-.ludo__players--home-1 > [data-place]:hover {
+.ludo__players--home-g > [data-place]:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
-.ludo__players--home-2 {
+.ludo__players--home-b {
   right: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -461,7 +465,7 @@ body {
   justify-items: center;
   background: #41a2ff;
 }
-.ludo__players--home-2 > [data-place] {
+.ludo__players--home-b > [data-place] {
   position: relative;
   width: 110px;
   height: 110px;
@@ -470,10 +474,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition: 400ms;
 }
-.ludo__players--home-2 > [data-place]:hover {
+.ludo__players--home-b > [data-place]:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
-.ludo__players--home-3 {
+.ludo__players--home-r {
   bottom: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -481,7 +485,7 @@ body {
   justify-items: center;
   background: #fe0000;
 }
-.ludo__players--home-3 > [data-place] {
+.ludo__players--home-r > [data-place] {
   position: relative;
   width: 110px;
   height: 110px;
@@ -490,10 +494,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition: 400ms;
 }
-.ludo__players--home-3 > [data-place]:hover {
+.ludo__players--home-r > [data-place]:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
-.ludo__players--home-4 {
+.ludo__players--home-y {
   bottom: 0;
   right: 0;
   display: grid;
@@ -502,7 +506,7 @@ body {
   justify-items: center;
   background: #ffff00;
 }
-.ludo__players--home-4 > [data-place] {
+.ludo__players--home-y > [data-place] {
   position: relative;
   width: 110px;
   height: 110px;
@@ -511,7 +515,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition: 400ms;
 }
-.ludo__players--home-4 > [data-place]:hover {
+.ludo__players--home-y > [data-place]:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 .ludo__tracks > * {
@@ -703,6 +707,10 @@ body {
 }
 .temp-1:hover, .temp-2:hover, .temp-3:hover, .temp-4:hover {
   background: #41a2ff;
+}
+
+.none {
+  display: none;
 }
 
 /*# sourceMappingURL=main.css.map */

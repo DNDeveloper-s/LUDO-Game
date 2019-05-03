@@ -66,7 +66,7 @@ body {
         position: absolute;
       }
 
-      &-1 {
+      &-g {
         top: 0;
         left: 0;
         display: grid;
@@ -87,7 +87,7 @@ body {
         }
       }
 
-      &-2 {
+      &-b {
         right: 0;
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -105,7 +105,7 @@ body {
         }
       }
 
-      &-3 {
+      &-r {
         bottom: 0;
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -123,7 +123,7 @@ body {
         }
       }
 
-      &-4 {
+      &-y {
         bottom: 0;
         right: 0;
         display: grid;
@@ -362,4 +362,9 @@ body {
   &-4:hover {
     background: $blue;
   }
+}
+
+
+.none {
+  display: none;
 }
