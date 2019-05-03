@@ -53,6 +53,24 @@ body {
     position: relative;
   }
 
+  &__dice {
+    position: absolute;
+    z-index: 10000000000;
+
+    @include absCenter();
+
+    > img {
+      width: 100px;
+      height: 100px;
+      border: 1px solid rgba(0,0,0,0.3);
+      position: absolute;
+
+      @include absCenter();
+      //display: none;
+    }
+
+  }
+
   &__players {
     z-index: -1;
 

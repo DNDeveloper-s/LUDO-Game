@@ -49,6 +49,7 @@ const ap1 = document.querySelector('.temp-1');
 const ap2 = document.querySelector('.temp-2');
 const ap3 = document.querySelector('.temp-3');
 const ap4 = document.querySelector('.temp-4');
+const ap5 = document.querySelector('.temp-5');
 
 
 ap1.addEventListener('click', function() {
@@ -87,7 +88,8 @@ let Data = {
         pawnStyle: [g1, g2, g3, g4],
         pawnStr: ['g1', 'g2', 'g3', 'g4'],
         startingPoint: 14,
-        winPlace: 18
+        winPlace: 18,
+        difference: null
     },
     player2: {
         pawnPlace: [null, null, null, null],
@@ -104,7 +106,8 @@ let Data = {
         pawnStyle: [b1, b2, b3, b4],
         pawnStr: ['b1', 'b2', 'b3', 'b4'],
         startingPoint: 27,
-        winPlace: 31
+        winPlace: 31,
+        difference: null
     },
     player3: {
         pawnPlace: [null, null, null, null],
@@ -121,7 +124,8 @@ let Data = {
         pawnStyle: [r1, r2, r3, r4],
         pawnStr: ['r1', 'r2', 'r3', 'r4'],
         startingPoint: 1,
-        winPlace: 5
+        winPlace: 5,
+        difference: null
     },
     player4: {
         pawnPlace: [null, null, null, null],
@@ -138,7 +142,8 @@ let Data = {
         pawnStyle: [y1, y2, y3, y4],
         pawnStr: ['y1', 'y2', 'y3', 'y4'],
         startingPoint: 40,
-        winPlace: 44
+        winPlace: 44,
+        difference: null
     }
 };
 
@@ -239,7 +244,7 @@ box.forEach(parentCur => {
 
 function loopingAround(startingPoint, posy) {
         num = startingPoint;
-        num += difference;
+        num += Data[activePlayer].difference;
         if(num === 58 || num === 57 || num === 56 || num === 55 || num === 54 || num === 53) {
             if(num === 53) {
                 num = 1;
@@ -369,12 +374,39 @@ function checkRevolvedPawns(pawn) {
     const winPosy = Data[activePlayer].winPos[pawn[pawn.length - 1] - 1];
 
     if(position >= Data[activePlayer].winPlace && winPosy) {
-        console.log(`${activePlayer} is winner and the pawn no. ${pawn[pawn.length - 1]}`);
+        // console.log(`${activePlayer} is winner and the pawn no. ${pawn[pawn.length - 1]}`);
         Data[activePlayer].winPawns[pawn[pawn.length - 1] - 1] = true;
 
         if(Data[activePlayer].winPawns[0] && Data[activePlayer].winPawns[1] && Data[activePlayer].winPawns[2] && Data[activePlayer].winPawns[3]) {
-            console.log('Its all red');
+            // console.log('Its all red');
         }
 
     }
 }
+
+// function createDice() {
+//     for(let i = 1; i < 7; i++) {
+//         const html = `<img class="dice" src="./images/dice-${i}.png" alt="">`;
+//
+//         document.querySelector('.ludo__dice').insertAdjacentHTML('beforeend', html);
+//     }
+// }
+//
+// createDice();
+
+function revolveDice() {
+    let number = Math.floor(Math.random() * 6) + 1;
+    console.log(number);
+    displayDice(number);
+
+    return number;
+}
+
+function displayDice(n) {
+    document.querySelector('.ludo__dice').innerHTML = `<img class="dice" src="./images/dice-${n}.png" alt="">`;
+}
+
+ap5.addEventListener('click', () => {
+    let diff = revolveDice();
+    Data[activePlayer].difference = diff;
+});
