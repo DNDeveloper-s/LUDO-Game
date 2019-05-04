@@ -359,7 +359,7 @@ body {
 
   &:hover {
     box-shadow: 0 0 20px rgba(0,0,0,0.6);
-    transform: translateY(2px);
+    transform: translateY(-2px);
   }
  }
 
@@ -397,4 +397,18 @@ body {
 
 .none {
   display: none;
+}
+
+.active{
+  border: 10px solid rgba(255, 120, 72, 0.87);
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.score__container {
+  width: 80px;
+  height: 80px;
+  border: 1px solid lightgrey;
+  background: rgba(255, 255, 255, 0.5);
+
+  @include absCenter();
 }
