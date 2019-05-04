@@ -59,18 +59,19 @@ const ap5 = document.querySelector('.temp-5');
 
 const box = document.querySelectorAll('.box');
 let num, place,
-    activePlayer = 'player1', abortPlayer, con;
+    activePlayer = 'player1', abortPlayer, con, clickedPawn;
 
 let Data = {
     player1: {
         pawnPlace: [null, null, null, null],
         color: 'green',
-        winPos: [false, false, false, false],
         winNum: [7, 6, 13, 100],
+        winPos: [false, false, false, false],
+        winThis: [false, false, false, false],
         winPawns: [false, false, false, false],
         pawn: [{
-            ovlp: false
-        },
+                ovlp: false
+            },
             {
                 ovlp: false
             },
@@ -87,14 +88,15 @@ let Data = {
         startingPoint: 14,
         winPlace: 18,
         difference: null,
-        diceNos: [null, null, null],
-        // diceNos: [6, 1, null],
+        // diceNos: [null, null, null],
+        diceNos: [1, null, null],
         activeDiff: null,
     },
     player2: {
         pawnPlace: [null, null, null, null],
         color: 'blue',
         winPos: [false, false, false, false],
+        winThis: [false, false, false, false],
         winNum: [20, 19, 26, 100],
         winPawns: [false, false, false, false],
         pawn: [{
@@ -123,11 +125,12 @@ let Data = {
         pawnPlace: [null, null, null, null],
         color: 'red',
         winPos: [false, false, false, false],
+        winThis: [false, false, false, false],
         winNum: [1, 10, 46, 45, 52, 100],
         winPawns: [false, false, false, false],
         pawn: [{
-            ovlp: false
-        },
+                ovlp: false
+            },
             {
                 ovlp: false
             },
@@ -151,11 +154,12 @@ let Data = {
         pawnPlace: [null, null, null, null],
         color: 'yellow',
         winPos: [false, false, false, false],
+        winThis: [false, false, false, false],
         winNum: [33, 32, 39, 100],
         winPawns: [false, false, false, false],
         pawn: [{
-            ovlp: false
-        },
+                ovlp: false
+            },
             {
                 ovlp: false
             },
@@ -176,7 +180,6 @@ let Data = {
         activeDiff: null,
     }
 };
-
 
 function movePawn(startingPoint, pawn) {
     let posi = checkWinEntrance({
@@ -206,7 +209,6 @@ function movePawn(startingPoint, pawn) {
     checkDualPawns('player4', 'player3');
 
     checkRevolvedPawns(pawn);
-    console.log(startingPoint);
 }
 
 function firstMovePawn(point, pawn) {
@@ -333,19 +335,45 @@ box.forEach(parentCur => {
         const classes = e.srcElement.classList;
         classes.forEach(cur => {
             if (cur === `clickable-${Data[activePlayer].color[0]}-1`) {
+                clickedPawn = 'first';
                 clickableElements(e, 0, 1);
             } else
             if (cur === `clickable-${Data[activePlayer].color[0]}-2`) {
+                clickedPawn = 'second';
                 clickableElements(e, 1, 2);
             } else
             if (cur === `clickable-${Data[activePlayer].color[0]}-3`) {
+                clickedPawn = 'third';
                 clickableElements(e, 2, 3);
             } else
             if (cur === `clickable-${Data[activePlayer].color[0]}-4`) {
+                clickedPawn = 'forth';
                 clickableElements(e, 3, 4);
             }
         })
     });
+});
+
+setInterval(() => {
+    if(Data[activePlayer].winPos[0] || Data[activePlayer].winPos[1] || Data[activePlayer].winPos[2] || Data[activePlayer].winPos[3]) {
+        let pawn;
+        if(clickedPawn === 'first') {
+            pawn = `${Data[activePlayer].color[0]}${1}`;
+        } else if(clickedPawn === 'second') {
+            pawn = `${Data[activePlayer].color[1]}${2}`;
+        } else if(clickedPawn === 'third') {
+            pawn = `${Data[activePlayer].color[2]}${3}`;
+        } else if(clickedPawn === 'forth') {
+            pawn = `${Data[activePlayer].color[3]}${4}`;
+        }
+
+        checkWinEntrance({
+            color: Data[activePlayer].color[0],
+            num: Data[activePlayer].winNum
+        }, pawn);
+
+        console.log('Its Done');
+    }
 });
 
 function loopingAround(startingPoint, posy) {
@@ -387,8 +415,8 @@ function checkWinEntrance({
         }
         if (winPosy) {
             if (pos > num[0] && pos < num[3]) {
-                if (pos >= num[2]) {
-                    Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = true;
+                if (pos > (num[2] - 1)) {
+                    Data[activePlayer].winThis[pawn[pawn.length - 1] - 1] = true;
                 }
                 return `win${color}`;
             }
@@ -408,7 +436,7 @@ function checkWinEntrance({
         if (winPosy) {
             if (pos >= num[3] || pos >= num[0] && pos < num[1]) {
                 if (pos >= num[3] || pos >= num[0] && pos < num[1]) {
-                    Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = true;
+                    Data[activePlayer].winThis[pawn[pawn.length - 1] - 1] = true;
                 }
                 return `win${color}`;
             }
@@ -441,8 +469,10 @@ function checkDualPawns(pl1, pl2) {
                             if (curS === 1 || curS === 9 || curS === 14 || curS === 22 || curS === 27 || curS === 35 || curS === 40 || curS === 48) {
 
                             } else {
-                                Data[activePlayer].overlapped = true;
-                                resetPawns();
+                                if(!Data[abortPlayer].winThis[con]) {
+                                    Data[activePlayer].overlapped = true;
+                                    resetPawns();
+                                }
                             }
                         } else if (curL !== null && curS !== null && curL !== curS) {
                             activePlayer === `${pl1}` ? abortPlayer = `${pl2}` : abortPlayer = `${pl1}`;
@@ -523,6 +553,7 @@ ap5.addEventListener('click', () => {
         Data[activePlayer].diceNos[2] = null;
 
         console.log('Six comes 3 times');
+        changePlayer();
     }
 
     console.log(Data[activePlayer].diceNos);
