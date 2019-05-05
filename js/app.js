@@ -58,60 +58,35 @@ const ap5 = document.querySelector('.temp-5');
  */
 
 const box = document.querySelectorAll('.box');
-let num, place,
-    activePlayer = 'player1', abortPlayer, con, clickedPawn;
+let num, place, activePlayer = 'player1', abortPlayer, con, clickedPawn;
 
 let Data = {
     player1: {
         pawnPlace: [null, null, null, null],
         color: 'green',
-        winNum: [7, 6, 13, 100],
+        winNum: [5, 6, 13, 100],
         winPos: [false, false, false, false],
         winThis: [false, false, false, false],
         winPawns: [false, false, false, false],
-        pawn: [{
-                ovlp: false
-            },
-            {
-                ovlp: false
-            },
-            {
-                ovlp: false
-            },
-            {
-                ovlp: false
-            }
-        ],
+        winMove: [false, false, false, false],
         overlapped: false,
         pawnStyle: [g1, g2, g3, g4],
         pawnStr: ['g1', 'g2', 'g3', 'g4'],
         startingPoint: 14,
         winPlace: 18,
         difference: null,
-        // diceNos: [null, null, null],
-        diceNos: [1, null, null],
+        diceNos: [null, null, null],
         activeDiff: null,
+        farFromWin: [null, null, null, null],
     },
     player2: {
         pawnPlace: [null, null, null, null],
         color: 'blue',
+        winNum: [18, 19, 26, 100],
         winPos: [false, false, false, false],
         winThis: [false, false, false, false],
-        winNum: [20, 19, 26, 100],
         winPawns: [false, false, false, false],
-        pawn: [{
-            ovlp: false
-        },
-            {
-                ovlp: false
-            },
-            {
-                ovlp: false
-            },
-            {
-                ovlp: false
-            }
-        ],
+        winMove: [false, false, false, false],
         overlapped: false,
         pawnStyle: [b1, b2, b3, b4],
         pawnStr: ['b1', 'b2', 'b3', 'b4'],
@@ -120,27 +95,16 @@ let Data = {
         difference: null,
         diceNos: [null, null, null],
         activeDiff: null,
+        farFromWin: [null, null, null, null],
     },
     player3: {
         pawnPlace: [null, null, null, null],
         color: 'red',
+        winNum: [1, 10, 44, 45, 52, 100],
         winPos: [false, false, false, false],
         winThis: [false, false, false, false],
-        winNum: [1, 10, 46, 45, 52, 100],
         winPawns: [false, false, false, false],
-        pawn: [{
-                ovlp: false
-            },
-            {
-                ovlp: false
-            },
-            {
-                ovlp: false
-            },
-            {
-                ovlp: false
-            }
-        ],
+        winMove: [false, false, false, false],
         overlapped: false,
         pawnStyle: [r1, r2, r3, r4],
         pawnStr: ['r1', 'r2', 'r3', 'r4'],
@@ -149,27 +113,16 @@ let Data = {
         difference: null,
         diceNos: [null, null, null],
         activeDiff: null,
+        farFromWin: [null, null, null, null],
     },
     player4: {
         pawnPlace: [null, null, null, null],
         color: 'yellow',
+        winNum: [31, 32, 39, 100],
         winPos: [false, false, false, false],
         winThis: [false, false, false, false],
-        winNum: [33, 32, 39, 100],
         winPawns: [false, false, false, false],
-        pawn: [{
-                ovlp: false
-            },
-            {
-                ovlp: false
-            },
-            {
-                ovlp: false
-            },
-            {
-                ovlp: false
-            }
-        ],
+        winMove: [false, false, false, false],
         overlapped: false,
         pawnStyle: [y1, y2, y3, y4],
         pawnStr: ['y1', 'y2', 'y3', 'y4'],
@@ -178,10 +131,12 @@ let Data = {
         difference: null,
         diceNos: [null, null, null],
         activeDiff: null,
+        farFromWin: [null, null, null, null],
     }
 };
 
 function movePawn(startingPoint, pawn) {
+
     let posi = checkWinEntrance({
         color: Data[activePlayer].color[0],
         num: Data[activePlayer].winNum
@@ -196,7 +151,7 @@ function movePawn(startingPoint, pawn) {
     } else {
         Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] = parseInt(place.dataset.id);
     }
-
+    Data[activePlayer].difference = Data[activePlayer].diceNos[0] + Data[activePlayer].diceNos[1] + Data[activePlayer].diceNos[2];
     const html = `<div class="clickable-${Data[activePlayer].color[0]}-${pawn[pawn.length - 1]} pawn ${pawn} ${Data[activePlayer].color[0]}">${pawn[pawn.length - 1]}</div>`;
 
     place.insertAdjacentHTML('beforeend', html);
@@ -268,6 +223,7 @@ pawns(pawnY3, 'player4', 40, y3);
 pawns(pawnY4, 'player4', 40, y4);
 
 function changePlayer() {
+    Data[activePlayer].difference = null;
     Data[activePlayer].diceNos[0] = null;
     Data[activePlayer].diceNos[1] = null;
     Data[activePlayer].diceNos[2] = null;
@@ -294,6 +250,9 @@ function changePlayer() {
 }
 
 function clickableElements(event, i, j) {
+    let pawn = `${Data[activePlayer].color[i]}${j}`;
+
+    Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1] = null;
 
     if(Data[activePlayer].diceNos[0] === null && Data[activePlayer].diceNos[1] === null && Data[activePlayer].diceNos[2] === null) {
         if(!Data[activePlayer].overlapped) {
@@ -318,7 +277,8 @@ function clickableElements(event, i, j) {
         }
 
         event.srcElement.parentElement.removeChild(event.target);
-        movePawn(Data[activePlayer].pawnPlace[i], `${Data[activePlayer].color[i]}${j}`);
+        movePawn(Data[activePlayer].pawnPlace[i], pawn);
+
 
 
         if(Data[activePlayer].diceNos[0] === null && Data[activePlayer].diceNos[1] === null && Data[activePlayer].diceNos[2] === null) {
@@ -334,47 +294,127 @@ box.forEach(parentCur => {
     parentCur.addEventListener('click', (e) => {
         const classes = e.srcElement.classList;
         classes.forEach(cur => {
+            let pawn;
             if (cur === `clickable-${Data[activePlayer].color[0]}-1`) {
+                pawn = `${Data[activePlayer].color[0]}-1`;
                 clickedPawn = 'first';
-                clickableElements(e, 0, 1);
+                if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
+                    if(Data[activePlayer].winMove[pawn[pawn.length - 1] - 1]) {
+                        console.log(Data[activePlayer].farFromWin);
+                        console.log(Data[activePlayer].difference);
+                        if(Data[activePlayer].difference <= Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1]) {
+                            clickableElements(e, 0, 1);
+                        } else {
+                            if(Data[activePlayer].pawnPlace[1] === null && Data[activePlayer].pawnPlace[2] === null && Data[activePlayer].pawnPlace[3] === null) {
+                                changePlayer();
+                            }
+                        }
+                    }
+                } else {
+                    clickableElements(e, 0, 1);
+                }
             } else
             if (cur === `clickable-${Data[activePlayer].color[0]}-2`) {
+                pawn = `${Data[activePlayer].color[0]}-2`;
                 clickedPawn = 'second';
-                clickableElements(e, 1, 2);
+                if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
+                    if(Data[activePlayer].winMove[pawn[pawn.length - 1] - 1]) {
+                        console.log(Data[activePlayer].farFromWin);
+                        console.log(Data[activePlayer].difference);
+                        if(Data[activePlayer].difference <= Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1]) {
+                            clickableElements(e, 1, 2);
+                        } else {
+                            if(Data[activePlayer].pawnPlace[0] === null && Data[activePlayer].pawnPlace[2] === null && Data[activePlayer].pawnPlace[3] === null) {
+                                changePlayer();
+                            }
+                        }
+                    }
+                } else {
+                    clickableElements(e, 1, 2);
+                }
             } else
             if (cur === `clickable-${Data[activePlayer].color[0]}-3`) {
+                pawn = `${Data[activePlayer].color[0]}-3`;
                 clickedPawn = 'third';
-                clickableElements(e, 2, 3);
+                if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
+                    if(Data[activePlayer].winMove[pawn[pawn.length - 1] - 1]) {
+                        console.log(Data[activePlayer].farFromWin);
+                        console.log(Data[activePlayer].difference);
+                        if(Data[activePlayer].difference <= Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1]) {
+                            clickableElements(e, 2, 3);
+                        } else {
+                            if(Data[activePlayer].pawnPlace[0] === null && Data[activePlayer].pawnPlace[1] === null && Data[activePlayer].pawnPlace[3] === null) {
+                                changePlayer();
+                            }
+                        }
+                    }
+                } else {
+                    clickableElements(e, 2, 3);
+                }
             } else
             if (cur === `clickable-${Data[activePlayer].color[0]}-4`) {
+                pawn = `${Data[activePlayer].color[0]}-4`;
                 clickedPawn = 'forth';
-                clickableElements(e, 3, 4);
+                if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
+                    if(Data[activePlayer].winMove[pawn[pawn.length - 1] - 1]) {
+                        console.log(Data[activePlayer].farFromWin);
+                        console.log(Data[activePlayer].difference);
+                        if(Data[activePlayer].difference <= Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1]) {
+                            clickableElements(e, 3, 4);
+                        } else {
+                            if(Data[activePlayer].pawnPlace[0] === null && Data[activePlayer].pawnPlace[1] === null && Data[activePlayer].pawnPlace[2] === null) {
+                                changePlayer();
+                            }
+                        }
+                    }
+                } else {
+                    clickableElements(e, 3, 4);
+                }
             }
         })
     });
 });
 
 setInterval(() => {
-    if(Data[activePlayer].winPos[0] || Data[activePlayer].winPos[1] || Data[activePlayer].winPos[2] || Data[activePlayer].winPos[3]) {
-        let pawn;
-        if(clickedPawn === 'first') {
-            pawn = `${Data[activePlayer].color[0]}${1}`;
-        } else if(clickedPawn === 'second') {
-            pawn = `${Data[activePlayer].color[1]}${2}`;
-        } else if(clickedPawn === 'third') {
-            pawn = `${Data[activePlayer].color[2]}${3}`;
-        } else if(clickedPawn === 'forth') {
-            pawn = `${Data[activePlayer].color[3]}${4}`;
+    let pawn;
+    if(clickedPawn === 'first') {
+        pawn = `${Data[activePlayer].color[0]}${1}`;
+    } else if(clickedPawn === 'second') {
+        pawn = `${Data[activePlayer].color[1]}${2}`;
+    } else if(clickedPawn === 'third') {
+        pawn = `${Data[activePlayer].color[2]}${3}`;
+    } else if(clickedPawn === 'forth') {
+        pawn = `${Data[activePlayer].color[3]}${4}`;
+    }
+
+    if(pawn) {
+        if(Data[activePlayer].pawnPlace[0] !== null || Data[activePlayer].pawnPlace[1] !== null || Data[activePlayer].pawnPlace[2] !== null || Data[activePlayer].pawnPlace[3] !== null) {
+            if(Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] > 2 && Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] < 7) {
+                evalWinDice(pawn);
+            }
         }
 
+        if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
+            Data[activePlayer].winMove[pawn[pawn.length - 1] - 1] = true;
+            console.log('Its inside the red pawn');
+        }
+    }
+
+
+
+    if(Data[activePlayer].winPos[0] || Data[activePlayer].winPos[1] || Data[activePlayer].winPos[2] || Data[activePlayer].winPos[3]) {
         checkWinEntrance({
             color: Data[activePlayer].color[0],
             num: Data[activePlayer].winNum
         }, pawn);
-
-        console.log('Its Done');
+        evalWinDice(pawn);
+        resetWonPawns(pawn);
     }
 });
+
+function evalWinDice(pawn) {
+    Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1] = Data[activePlayer].winPlace - Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1];
+}
 
 function loopingAround(startingPoint, posy) {
     num = startingPoint;
@@ -408,7 +448,8 @@ function checkWinEntrance({
                               num
                           }, pawn) {
     const pos = Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1];
-    const winPosy = Data[activePlayer].winPos[pawn[pawn.length - 1] - 1];
+    const winPosy = Data[activePlayer].winPos[pawn[pawn.length - 1] - 1]
+    // [2, 6, 13, 100]
     if (color !== 'r') {
         if (pos >= num[1]) {
             Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = true;
@@ -421,6 +462,7 @@ function checkWinEntrance({
                 return `win${color}`;
             }
         } else {
+            // if (pos > num[0] && pos < num[2]) {
             if (pos > num[0] && pos < num[2]) {
                 return `win${color}`;
             } else {
@@ -465,7 +507,7 @@ function checkDualPawns(pl1, pl2) {
                             } else if (activePlayer === pl1) {
                                 con = Data[abortPlayer].pawnPlace.indexOf(curS);
                             }
-                            Data[abortPlayer].pawn[con].ovlp = true;
+                            // Data[abortPlayer].pawn[con].ovlp = true;
                             if (curS === 1 || curS === 9 || curS === 14 || curS === 22 || curS === 27 || curS === 35 || curS === 40 || curS === 48) {
 
                             } else {
@@ -574,3 +616,12 @@ ap5.addEventListener('click', () => {
 
     Data[activePlayer].difference = Data[activePlayer].diceNos[0] + Data[activePlayer].diceNos[1] + Data[activePlayer].diceNos[2];
 });
+
+function resetWonPawns(pawn) {
+    if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
+        if(Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] > (Data[activePlayer].winPlace - 1)) {
+            Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] = 'win';
+            console.log(`Winner Pawn is resetted`);
+        }
+    }
+}
