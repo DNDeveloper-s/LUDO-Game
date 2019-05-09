@@ -46,6 +46,11 @@ const homeB = document.querySelector('.ludo__players--home-b');
 const homeR = document.querySelector('.ludo__players--home-r');
 const homeY = document.querySelector('.ludo__players--home-y');
 
+const showG = document.querySelector('.ludo__players--home-g .score__container');
+const showB = document.querySelector('.ludo__players--home-b .score__container');
+const showR = document.querySelector('.ludo__players--home-r .score__container');
+const showY = document.querySelector('.ludo__players--home-y .score__container');
+
 /**
  * Testing Purposes
  */
@@ -176,6 +181,31 @@ function firstMovePawn(point, pawn) {
     place.insertAdjacentHTML('beforeend', html);
 }
 
+function displayDiceNos() {
+    let player;
+        if(activePlayer === 'player1') {
+            player = eval('showG');
+        } else if(activePlayer === 'player2') {
+            player = eval('showB');
+        } else if(activePlayer === 'player3') {
+            player = eval('showR');
+        } else if(activePlayer === 'player4') {
+            player = eval('showY');
+        }
+
+        player.innerHTML = '';
+
+        if(Data[activePlayer].diceNos[0] !== null) {
+            player.insertAdjacentHTML("beforeend", `${Data[activePlayer].diceNos[0]} `);
+        }
+        if(Data[activePlayer].diceNos[1] !== null) {
+            player.insertAdjacentHTML("beforeend", `${Data[activePlayer].diceNos[1]} `);
+        }
+        if(Data[activePlayer].diceNos[2] !== null) {
+            player.insertAdjacentHTML("beforeend", `${Data[activePlayer].diceNos[2]}`);
+        }
+}
+
 function pawns(pawn, actPlayer, startingPoint, pawnDOM) {
     home.addEventListener('click', function (e) {
         if (e.target === pawn) {
@@ -188,6 +218,9 @@ function pawns(pawn, actPlayer, startingPoint, pawnDOM) {
                     } else {
                         Data[activePlayer].diceNos[0] = null;
                     }
+
+                    displayDiceNos();
+
                     firstMovePawn(startingPoint, pawnDOM);
                     pawn.style.display = 'none';
 
@@ -251,7 +284,6 @@ function changePlayer() {
 
 function clickableElements(event, i, j) {
     let pawn = `${Data[activePlayer].color[i]}${j}`;
-
     Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1] = null;
 
     if(Data[activePlayer].diceNos[0] === null && Data[activePlayer].diceNos[1] === null && Data[activePlayer].diceNos[2] === null) {
@@ -276,6 +308,7 @@ function clickableElements(event, i, j) {
             Data[activePlayer].diceNos[2] = null;
         }
 
+        displayDiceNos();
         event.srcElement.parentElement.removeChild(event.target);
         movePawn(Data[activePlayer].pawnPlace[i], pawn);
 
@@ -589,6 +622,8 @@ ap5.addEventListener('click', () => {
         Data[activePlayer].diceNos[2] = revolveDice();
     }
 
+    displayDiceNos();
+
     if(Data[activePlayer].diceNos[2] === 6) {
         Data[activePlayer].diceNos[0] = null;
         Data[activePlayer].diceNos[1] = null;
@@ -619,7 +654,7 @@ ap5.addEventListener('click', () => {
 
 function resetWonPawns(pawn) {
     if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
-        if(Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] > (Data[activePlayer].winPlace - 1)) {
+        if(Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] >= (Data[activePlayer].winPlace - 1)) {
             Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] = 'win';
             console.log(`Winner Pawn is resetted`);
         }

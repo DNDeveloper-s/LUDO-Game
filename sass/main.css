@@ -388,14 +388,23 @@ body {
 }
 
 .score__container {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 60px;
   border: 1px solid lightgrey;
   background: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  color: #41a2ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: 14px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-size: 26px;
 }
 
 .g {
@@ -787,14 +796,23 @@ body {
 }
 
 .score__container {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 60px;
   border: 1px solid lightgrey;
   background: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  color: #41a2ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: 14px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-size: 26px;
 }
 
 /*# sourceMappingURL=main.css.map */

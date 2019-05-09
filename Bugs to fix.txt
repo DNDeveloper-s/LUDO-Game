@@ -3,3 +3,5 @@ Ludo Bugs:-
 1. Player is not changing on dice comes with 6 three times.  ------- Fixed
 
 2. The bug was Blue pawn was in win pos but yellow replaced that pawn in non-win pos at same position and    -------- Fixed
+
+3. Change the player on dice revolve when ur pawn is in red area and rest pawns are locked and then you get the high value from farfromwin and difference.    -------- Fixed
