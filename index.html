@@ -5,55 +5,63 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>LUDO | Official Game By Saurabh Singh</title>
 
     <!--Style Sheets-->
     <link rel="stylesheet" href="./sass/main.css">
 </head>
+<style>
+    video {
+        width: 200px;
+        height: 200px;
+    }
+</style>
 <body>
     <div class="temp">
-<!--        <div class="temp-1">1</div>-->
-<!--        <div class="temp-2">2</div>-->
-<!--        <div class="temp-3">3</div>-->
-<!--        <div class="temp-4">4</div>-->
-        <div class="temp-5">Revolve Dice</div>
+        <div class="temp-6">Revolve Dice</div>
+        <div class="temp-7">Toggle Voice</div>
+        <div class="temp-8">Manual Guide</div>
     </div>
 
     <div class="ludo">
         <div class="ludo__body">
             <div class="ludo__container">
                 <div class="ludo__dice">
-                    <img class="dice" src="./images/dice-1.png" alt="">
+                    <img class="dice" src="./images/5.jpg" alt="">
                 </div>
                 <div class="ludo__players">
                     <div class="ludo__players--home">
-                        <div class="ludo__players--home-g active">
-                            <div class="score__container"></div>
-                            <div class="ludo__players--home__place" data-place="1"><div class="pawn pawn-g-1 g">1</div></div>
-                            <div class="ludo__players--home__place" data-place="2"><div class="pawn pawn-g-2 g">2</div></div>
-                            <div class="ludo__players--home__place" data-place="3"><div class="pawn pawn-g-3 g">3</div></div>
-                            <div class="ludo__players--home__place" data-place="4"><div class="pawn pawn-g-4 g">4</div></div>
+                        <div class="ludo__players--home-g">
+                            <div class="score__container score__container-g"></div>
+                            <div class="ludo__players--home__place" data-place="1"><div class="pawn pawn-g-1 g" data-pawn="g1">1</div></div>
+                            <div class="ludo__players--home__place" data-place="2"><div class="pawn pawn-g-2 g" data-pawn="g2">2</div></div>
+                            <div class="ludo__players--home__place" data-place="3"><div class="pawn pawn-g-3 g" data-pawn="g3">3</div></div>
+                            <div class="ludo__players--home__place" data-place="4"><div class="pawn pawn-g-4 g" data-pawn="g4">4</div></div>
+                            <div class="activePlayer">Player's Turn</div>
                         </div>
                         <div class="ludo__players--home-b">
-                            <div class="score__container"></div>
-                            <div class="ludo__players--home__place" data-place="1"><div class="pawn pawn-b-1 b">1</div></div>
-                            <div class="ludo__players--home__place" data-place="2"><div class="pawn pawn-b-2 b">2</div></div>
-                            <div class="ludo__players--home__place" data-place="3"><div class="pawn pawn-b-3 b">3</div></div>
-                            <div class="ludo__players--home__place" data-place="4"><div class="pawn pawn-b-4 b">4</div></div>
+                            <div class="score__container score__container-b"></div>
+                            <div class="ludo__players--home__place" data-place="1"><div class="pawn pawn-b-1 b" data-pawn="b1">1</div></div>
+                            <div class="ludo__players--home__place" data-place="2"><div class="pawn pawn-b-2 b" data-pawn="b2">2</div></div>
+                            <div class="ludo__players--home__place" data-place="3"><div class="pawn pawn-b-3 b" data-pawn="b3">3</div></div>
+                            <div class="ludo__players--home__place" data-place="4"><div class="pawn pawn-b-4 b" data-pawn="b4">4</div></div>
+                            <div class="activePlayer">Player's Turn</div>
                         </div>
                         <div class="ludo__players--home-r">
-                            <div class="score__container"></div>
-                            <div class="ludo__players--home__place" data-place="1"><div class="pawn pawn-r-1 r">1</div></div>
-                            <div class="ludo__players--home__place" data-place="2"><div class="pawn pawn-r-2 r">2</div></div>
-                            <div class="ludo__players--home__place" data-place="3"><div class="pawn pawn-r-3 r">3</div></div>
-                            <div class="ludo__players--home__place" data-place="4"><div class="pawn pawn-r-4 r">4</div></div>
+                            <div class="score__container score__container-r"></div>
+                            <div class="ludo__players--home__place" data-place="1"><div class="pawn pawn-r-1 r" data-pawn="r1">1</div></div>
+                            <div class="ludo__players--home__place" data-place="2"><div class="pawn pawn-r-2 r" data-pawn="r2">2</div></div>
+                            <div class="ludo__players--home__place" data-place="3"><div class="pawn pawn-r-3 r" data-pawn="r3">3</div></div>
+                            <div class="ludo__players--home__place" data-place="4"><div class="pawn pawn-r-4 r" data-pawn="r4">4</div></div>
+                            <div class="activePlayer showThis">Player's Turn</div>
                         </div>
                         <div class="ludo__players--home-y">
-                            <div class="score__container"></div>
-                            <div class="ludo__players--home__place" data-place="1"><div class="pawn pawn-y-1 y">1</div></div>
-                            <div class="ludo__players--home__place" data-place="2"><div class="pawn pawn-y-2 y">2</div></div>
-                            <div class="ludo__players--home__place" data-place="3"><div class="pawn pawn-y-3 y">3</div></div>
-                            <div class="ludo__players--home__place" data-place="4"><div class="pawn pawn-y-4 y">4</div></div>
+                            <div class="score__container score__container-y"></div>
+                            <div class="ludo__players--home__place" data-place="1"><div class="pawn pawn-y-1 y" data-pawn="y1">1</div></div>
+                            <div class="ludo__players--home__place" data-place  ="2"><div class="pawn pawn-y-2 y" data-pawn="y2">2</div></div>
+                            <div class="ludo__players--home__place" data-place="3"><div class="pawn pawn-y-3 y" data-pawn="y3">3</div></div>
+                            <div class="ludo__players--home__place" data-place="4"><div class="pawn pawn-y-4 y" data-pawn="y4">4</div></div>
+                            <div class="activePlayer">Player's Turn</div>
                         </div>
                     </div>
                 </div>
@@ -62,112 +70,112 @@
                     <div class="ludo__tracks-1">
                         <div class="ludo__tracks-1--rows">
                             <div class="ludo__tracks-1--rows-1">
-                                <div class="boxRow box" data-id="24" data-winb="24"></div>
-                                <div class="boxRow box" data-id="23" data-winb="23"></div>
-                                <div class="boxRow box b" data-id="22" data-winb="22"></div>
-                                <div class="boxRow box" data-id="21" data-winb="21"></div>
-                                <div class="boxRow box" data-id="20" data-winb="20"></div>
-                                <div class="boxRow box" data-id="19"></div>
+                                <div class="boxRow box" data-id="23" data-r="23" data-g="10" data-b="49" data-y="36"></div>
+                                <div class="boxRow box" data-id="22" data-r="22" data-g="9" data-b="48" data-y="35"></div>
+                                <div class="boxRow box b" data-id="21" data-r="21" data-g="8" data-b="47" data-y="34"></div>
+                                <div class="boxRow box" data-id="20" data-r="20" data-g="7" data-b="46" data-y="33"></div>
+                                <div class="boxRow box" data-id="19" data-r="19" data-g="6" data-b="45" data-y="32"></div>
+                                <div class="boxRow box" data-id="18" data-r="18" data-g="5" data-b="44" data-y="31"></div>
                             </div>
                             <div class="ludo__tracks-1--rows-2">
-                                <div class="boxRow box" data-id="25" data-winb="25"></div>
-                                <div class="boxRow box" data-winb="26"></div>
-                                <div class="boxRow box" data-winb="27"></div>
-                                <div class="boxRow box" data-winb="28"></div>
-                                <div class="boxRow box" data-winb="29"></div>
-                                <div class="boxRow box" data-winb="30"></div>
+                                <div class="boxRow box" data-id="24" data-r="24" data-g="11" data-b="50" data-y="37"></div>
+                                <div class="boxRow box" data-b="51"></div>
+                                <div class="boxRow box" data-b="52"></div>
+                                <div class="boxRow box" data-b="53"></div>
+                                <div class="boxRow box" data-b="54"></div>
+                                <div class="boxRow box" data-b="55"></div>
                             </div>
                             <div class="ludo__tracks-1--rows-3">
-                                <div class="boxRow box" data-id="26"></div>
-                                <div class="boxRow box" data-id="27"></div>
-                                <div class="boxRow box" data-id="28"></div>
-                                <div class="boxRow box" data-id="29"></div>
-                                <div class="boxRow box" data-id="30"></div>
-                                <div class="boxRow box" data-id="31"></div>
+                                <div class="boxRow box" data-id="25" data-g="12" data-r="25" data-y="38"></div>
+                                <div class="boxRow box" data-id="26" data-g="13" data-r="26" data-b="0" data-y="39"></div>
+                                <div class="boxRow box" data-id="27" data-g="14" data-r="27" data-b="1" data-y="40"></div>
+                                <div class="boxRow box" data-id="28" data-g="15" data-r="28" data-b="2" data-y="41"></div>
+                                <div class="boxRow box" data-id="29" data-g="16" data-r="29" data-b="3" data-y="42"></div>
+                                <div class="boxRow box" data-id="30" data-g="17" data-r="30" data-b="4" data-y="43"></div>
                             </div>
                         </div>
                     </div>
                     <div class="ludo__tracks-2">
                         <div class="ludo__tracks-2--rows">
                             <div class="ludo__tracks-2--rows-1">
-                                <div class="boxRow box" data-id="5"></div>
-                                <div class="boxRow box" data-id="4"></div>
-                                <div class="boxRow box" data-id="3"></div>
-                                <div class="boxRow box" data-id="2"></div>
-                                <div class="boxRow box" data-id="1"></div>
-                                <div class="boxRow box" data-id="52"></div>
+                                <div class="boxRow box" data-id="4" data-r="4" data-g="43" data-b="30" data-y="17"></div>
+                                <div class="boxRow box" data-id="3" data-r="3" data-g="42" data-b="29" data-y="16"></div>
+                                <div class="boxRow box" data-id="2" data-r="2" data-g="41" data-b="28" data-y="15"></div>
+                                <div class="boxRow box" data-id="1" data-r="1" data-g="40" data-b="27" data-y="14"></div>
+                                <div class="boxRow box" data-id="0" data-r="0" data-g="39" data-b="26" data-y="13"></div>
+                                <div class="boxRow box" data-id="51" data-g="38" data-b="25" data-y="12"></div>
                             </div>
                             <div class="ludo__tracks-2--rows-2">
-                                <div class="boxRow box" data-winr="4"></div>
-                                <div class="boxRow box" data-winr="3"></div>
-                                <div class="boxRow box" data-winr="2"></div>
-                                <div class="boxRow box" data-winr="1"></div>
-                                <div class="boxRow box" data-winr="52"></div>
-                                <div class="boxRow box" data-id="51" data-winr="51"></div>
+                                <div class="boxRow box" data-r="55"></div>
+                                <div class="boxRow box" data-r="54"></div>
+                                <div class="boxRow box" data-r="53"></div>
+                                <div class="boxRow box" data-r="52"></div>
+                                <div class="boxRow box" data-r="51"></div>
+                                <div class="boxRow box" data-id="50" data-r="50" data-g="37" data-b="24" data-y="11"></div>
                             </div>
                             <div class="ludo__tracks-2--rows-3">
-                                <div class="boxRow box" data-id="45" data-winr="45"></div>
-                                <div class="boxRow box" data-id="46" data-winr="46"></div>
-                                <div class="boxRow box" data-id="47" data-winr="47"></div>
-                                <div class="boxRow box r" data-id="48" data-winr="48"></div>
-                                <div class="boxRow box" data-id="49" data-winr="49"></div>
-                                <div class="boxRow box" data-id="50" data-winr="50"></div>
+                                <div class="boxRow box" data-id="44" data-r="44" data-g="31" data-b="18" data-y="5"></div>
+                                <div class="boxRow box" data-id="45" data-r="45" data-g="32" data-b="19" data-y="6"></div>
+                                <div class="boxRow box" data-id="46" data-r="46" data-g="33" data-b="20" data-y="7"></div>
+                                <div class="boxRow box r" data-id="47" data-r="47" data-g="34" data-b="21" data-y="8"></div>
+                                <div class="boxRow box" data-id="48" data-r="48" data-g="35" data-b="22" data-y="9"></div>
+                                <div class="boxRow box" data-id="49" data-r="49" data-g="36" data-b="23" data-y="10"></div>
                             </div>
                         </div>
                     </div>
                     <div class="ludo__tracks-3">
                         <div class="ludo__tracks-3--rows">
                             <div class="ludo__tracks-3--rows-1">
-                                <div class="boxCol box" data-id="13"></div>
-                                <div class="boxCol box" data-id="14"></div>
-                                <div class="boxCol box" data-id="15"></div>
-                                <div class="boxCol box" data-id="16"></div>
-                                <div class="boxCol box" data-id="17"></div>
-                                <div class="boxCol box" data-id="18"></div>
+                                <div class="boxCol box" data-id="12" data-r="12" data-b="38" data-y="25"></div>
+                                <div class="boxCol box" data-id="13" data-r="13" data-g="0" data-b="39" data-y="26"></div>
+                                <div class="boxCol box" data-id="14" data-r="14" data-g="1" data-b="40" data-y="27"></div>
+                                <div class="boxCol box" data-id="15" data-r="15" data-g="2" data-b="41" data-y="28"></div>
+                                <div class="boxCol box" data-id="16" data-r="16" data-g="3" data-b="42" data-y="29"></div>
+                                <div class="boxCol box" data-id="17" data-r="17" data-g="4" data-b="43" data-y="30"></div>
                             </div>
                             <div class="ludo__tracks-3--rows-2">
-                                <div class="boxCol box" data-id="12" data-wing="12"></div>
-                                <div class="boxCol box" data-wing="13"></div>
-                                <div class="boxCol box" data-wing="14"></div>
-                                <div class="boxCol box" data-wing="15"></div>
-                                <div class="boxCol box" data-wing="16"></div>
-                                <div class="boxCol box" data-wing="17"></div>
+                                <div class="boxCol box" data-id="11" data-r="11" data-g="50" data-b="37" data-y="24"></div>
+                                <div class="boxCol box" data-g="51"></div>
+                                <div class="boxCol box" data-g="52"></div>
+                                <div class="boxCol box" data-g="53"></div>
+                                <div class="boxCol box" data-g="54"></div>
+                                <div class="boxCol box" data-g="55"></div>
                             </div>
                             <div class="ludo__tracks-3--rows-3">
-                                <div class="boxCol box" data-id="11" data-wing="11"></div>
-                                <div class="boxCol box" data-id="10" data-wing="10"></div>
-                                <div class="boxCol box g" data-id="9" data-wing="9"></div>
-                                <div class="boxCol box" data-id="8" data-wing="8"></div>
-                                <div class="boxCol box" data-id="7" data-wing="7"></div>
-                                <div class="boxCol box" data-id="6"></div>
+                                <div class="boxCol box" data-id="10" data-r="10" data-g="49" data-b="36" data-y="23"></div>
+                                <div class="boxCol box" data-id="9" data-r="9" data-g="48" data-b="35" data-y="22"></div>
+                                <div class="boxCol box g" data-id="8" data-r="8" data-g="47" data-b="34" data-y="21"></div>
+                                <div class="boxCol box" data-id="7" data-r="7" data-g="46" data-b="33" data-y="20"></div>
+                                <div class="boxCol box" data-id="6" data-r="6" data-g="45" data-b="32" data-y="19"></div>
+                                <div class="boxCol box" data-id="5" data-r="5" data-g="44" data-b="31" data-y="18"></div>
                             </div>
                         </div>
                     </div>
                     <div class="ludo__tracks-4">
                         <div class="ludo__tracks-4--rows">
                             <div class="ludo__tracks-4--rows-1">
-                                <div class="boxCol box" data-id="32"></div>
-                                <div class="boxCol box" data-id="33" data-winy="33"></div>
-                                <div class="boxCol box" data-id="34" data-winy="34"></div>
-                                <div class="boxCol box y" data-id="35" data-winy="35"></div>
-                                <div class="boxCol box" data-id="36" data-winy="36"></div>
-                                <div class="boxCol box" data-id="37" data-winy="37"></div>
+                                <div class="boxCol box" data-id="31" data-r="31" data-g="18" data-b="5" data-y="44"></div>
+                                <div class="boxCol box" data-id="32" data-r="32" data-g="19" data-b="6" data-y="45"></div>
+                                <div class="boxCol box" data-id="33" data-r="33" data-g="20" data-b="7" data-y="46"></div>
+                                <div class="boxCol box y" data-id="34" data-r="34" data-g="21" data-b="8" data-y="47"></div>
+                                <div class="boxCol box" data-id="35" data-r="35" data-g="22" data-b="9" data-y="48"></div>
+                                <div class="boxCol box" data-id="36" data-r="36" data-g="23" data-b="10" data-y="49"></div>
                             </div>
                             <div class="ludo__tracks-4--rows-2">
-                                <div class="boxCol box" data-winy="43"></div>
-                                <div class="boxCol box" data-winy="42"></div>
-                                <div class="boxCol box" data-winy="41"></div>
-                                <div class="boxCol box" data-winy="40"></div>
-                                <div class="boxCol box" data-winy="39"></div>
-                                <div class="boxCol box" data-id="38" data-winy="38"></div>
+                                <div class="boxCol box" data-y="55"></div>
+                                <div class="boxCol box" data-y="54"></div>
+                                <div class="boxCol box" data-y="53"></div>
+                                <div class="boxCol box" data-y="52"></div>
+                                <div class="boxCol box" data-y="51"></div>
+                                <div class="boxCol box" data-id="37" data-r="37" data-g="24" data-b="11" data-y="50"></div>
                             </div>
                             <div class="ludo__tracks-4--rows-3">
-                                <div class="boxCol box" data-id="44"></div>
-                                <div class="boxCol box" data-id="43"></div>
-                                <div class="boxCol box" data-id="42"></div>
-                                <div class="boxCol box" data-id="41"></div>
-                                <div class="boxCol box" data-id="40"></div>
-                                <div class="boxCol box" data-id="39"></div>
+                                <div class="boxCol box" data-id="43" data-r="43" data-g="30" data-b="17" data-y="4"></div>
+                                <div class="boxCol box" data-id="42" data-r="42" data-g="29" data-b="16" data-y="3"></div>
+                                <div class="boxCol box" data-id="41" data-r="41" data-g="28" data-b="15" data-y="2"></div>
+                                <div class="boxCol box" data-id="40" data-r="40" data-g="27" data-b="14" data-y="1"></div>
+                                <div class="boxCol box" data-id="39" data-r="39" data-g="26" data-b="13" data-y="0"></div>
+                                <div class="boxCol box" data-id="38" data-r="38" data-g="25" data-b="12"></div>
                             </div>
                         </div>
                     </div>
@@ -176,6 +184,57 @@
         </div>
     </div>
 
+    <div class="showInfo"></div>
+
+    <div class="boxCol box" data-id="56" data-r="56" data-g="56" data-b="56" data-y="56"></div>
+
+    <div class="manual__panel">
+        <div class="close_manual">X</div>
+        <p>=> Hii Guys, Welcome to the Advanced Ludo Game</p>
+        <p>=> Here, I have introduced a new feature is Voice Control</p>
+        <p>=> You can control the dice, pawn with your voice and you can even check the score{Score part is coming soon}</p>
+        <p>=> For More Guidance. => <a class="openSS" href="#">Click Here</a></p>
+    </div>
+
+    <div class="ss_guides">
+        <div class="close_ss">X</div>
+        <div class="container">
+            <div class="imgSec"><img src="./images/Dice.PNG" alt=""></div>
+            <div class="contSec">Its the part which show and revolve the dice on saying 'call dice' on voice command.</div>
+        </div>
+        <div class="container alt">
+            <div class="imgSec"><img src="./images/PlayersTurn.PNG" alt=""></div>
+            <div class="contSec">Its the part where you can see who is the action player and commands will work only for that player dices, you cannot change player on your own, it will change automatically on certain and auto cases.</div>
+        </div>
+        <div class="container">
+            <div class="imgSec"><img src="./images/score.PNG" alt=""></div>
+            <div class="contSec">Its the part where you can see rolled dices for action player, and Here one more thing, Its more flexible that you can choose which you wanna run first like here as in picture it comes '6' and '2' and one with color red is active you can change active selected dice by clicking on certain dice no, 6 or 2 or you can change by voice command 'select first/second/third', Here could be third like '6' '6' '4' cannot be more than three.</div>
+        </div>
+        <div class="container alt">
+            <div class="imgSec"><img src="./images/voiice.PNG" alt=""></div>
+            <div class="contSec">Its the button whenever you wanna say something to the 'saura' Its kind of a robot here where you can tell him to do something according to commands provided here. Its clickable, if you think its not listening then tap on this button. But you can cross check it by instructions below.</div>
+        </div>
+        <div class="container">
+            <div class="imgSec"><img src="./images/revolve.PNG" alt=""></div>
+            <div class="contSec">Its the button whenever you decide that you wanna go on your own not with voice, Well its fine... You can revolve dice by clicking this button. but this button also activate 'saura' to listen.</div>
+        </div>
+        <div class="container alt">
+            <div class="imgSec"><img src="./images/warning.PNG" alt=""></div>
+            <div class="contSec">Here In Title bar, You can check whether 'saura' is listening or not. It can be checked by that orange popped circle, if its visible, it means 'saura' is listening, if not then try to press the Toggle Voice button.</div>
+        </div>
+        <div class="container">
+            <div class="imgSec"><img src="./images/allow.PNG" alt=""></div>
+            <div class="contSec">Here, You must Allow this Confirmation to use your microphone. Cause its kind of a security permissions which needs confirmation. Don't worry nothing brutal :P</div>
+        </div>
+        <div class="container">
+            <h2>All Voice Commands</h2>
+            <ul>
+                <li>call dice</li>
+                <li>call number one/two/three/four</li>
+                <li>select first/second/third</li>
+            </ul>
+        </div>
+    </div>
 <!--    <div class="pawn pawn-g-1 g"></div>-->
 <!--    <div class="pawn pawn-g-2 g"></div>-->
 <!--    <div class="pawn pawn-g-3 g"></div>-->
@@ -198,6 +257,8 @@
 
     <div class="wastes"></div>
 
+    <script src="js/manual.js"></script>
+    <script src="js/speech.js"></script>
     <script src="js/app.js"></script>
 </body>
-</html>;
+</html>

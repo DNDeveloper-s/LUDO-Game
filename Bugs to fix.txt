@@ -2,6 +2,147 @@ Ludo Bugs:-
 
 1. Player is not changing on dice comes with 6 three times.  ------- Fixed
 
-2. The bug was Blue pawn was in win pos but yellow replaced that pawn in non-win pos at same position and    -------- Fixed
 
-3. Change the player on dice revolve when ur pawn is in red area and rest pawns are locked and then you get the high value from farfromwin and difference.    -------- Fixed
+choosing dices
+
+call number 1/ one
+call number 2/to/two
+call number 3/three/free
+call number for/four/4/forward
+
+call dice/dies/rice/nice/eyes/dise/rise
+
+
+
+select first
+select second
+select third
+
+
+6  4
+
+
+Manual Guide
+
+
+Hii Guys, Welcome to the Advanced Ludo Game
+
+Here, I have introduced a new feature is Voice Control
+
+You can control the dice, pawn with your voice and you can even check the score{Score part is coming soon}
+
+For More Guidance. => Click Here
+
+
+
+Its the part which show and revolve the dice on saying 'call dice' on voice command.
+
+
+Its the part where you can see who is the action player and commands will work only for that player dices, you cannot change player on your own, it will change automatically on certain and auto cases.
+
+
+Its the part where you can see rolled dices for action player, and Here one more thing, Its more flexible that you can choose which you wanna run first like here as in picture it comes '6' and '2' and one with color red is active you can change active selected dice by clicking on certain dice no, 6 or 2 or you can change by voice command 'select first/second/third', Here could be third like '6' '6' '4' cannot be more than three.
+
+ 
+
+Its the button whenever you wanna say something to the 'saura' Its kind of a robot here where you can tell him to do something according to commands provided here. Its clickable, if you think its not listening then tap on this button. But you can cross check it by instructions below.
+
+
+Its the button whenever you decide that you wanna go on your own not with voice, Well its fine... You can revolve dice by clicking this button. but this button also activate 'saura' to listen.
+
+
+
+Here In Title bar, You can check whether 'saura' is listening or not. It can be checked by that orange popped circle, if its visible, it means 'saura' is listening, if not then try to press the Toggle Voice button.
+
+
+
+Here, You must Allow this Confirmation to use your microphone. Cause its kind of a security permissions which needs confirmation. Don't worry nothing brutal :P
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

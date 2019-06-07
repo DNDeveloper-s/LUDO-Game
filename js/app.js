@@ -1,598 +1,340 @@
-const g1 = 'pawn-g-1';
-const g2 = 'pawn-g-2';
-const g3 = 'pawn-g-3';
-const g4 = 'pawn-g-4';
 
-const b1 = 'pawn-b-1';
-const b2 = 'pawn-b-2';
-const b3 = 'pawn-b-3';
-const b4 = 'pawn-b-4';
-
-const r1 = 'pawn-r-1';
-const r2 = 'pawn-r-2';
-const r3 = 'pawn-r-3';
-const r4 = 'pawn-r-4';
-
-const y1 = 'pawn-y-1';
-const y2 = 'pawn-y-2';
-const y3 = 'pawn-y-3';
-const y4 = 'pawn-y-4';
-
-const pawnG1 = document.querySelector(`.${g1}`);
-const pawnG2 = document.querySelector(`.${g2}`);
-const pawnG3 = document.querySelector(`.${g3}`);
-const pawnG4 = document.querySelector(`.${g4}`);
-
-const pawnB1 = document.querySelector(`.${b1}`);
-const pawnB2 = document.querySelector(`.${b2}`);
-let pawnB3 = document.querySelector(`.${b3}`);
-const pawnB4 = document.querySelector(`.${b4}`);
-
-const home = document.querySelector('.ludo__players--home');
-
-
-const pawnR1 = document.querySelector(`.${r1}`);
-const pawnR2 = document.querySelector(`.${r2}`);
-const pawnR3 = document.querySelector(`.${r3}`);
-const pawnR4 = document.querySelector(`.${r4}`);
-
-const pawnY1 = document.querySelector(`.${y1}`);
-const pawnY2 = document.querySelector(`.${y2}`);
-const pawnY3 = document.querySelector(`.${y3}`);
-const pawnY4 = document.querySelector(`.${y4}`);
-
-const homeG = document.querySelector('.ludo__players--home-g');
-const homeB = document.querySelector('.ludo__players--home-b');
-const homeR = document.querySelector('.ludo__players--home-r');
-const homeY = document.querySelector('.ludo__players--home-y');
-
-const showG = document.querySelector('.ludo__players--home-g .score__container');
-const showB = document.querySelector('.ludo__players--home-b .score__container');
-const showR = document.querySelector('.ludo__players--home-r .score__container');
-const showY = document.querySelector('.ludo__players--home-y .score__container');
-
-/**
- * Testing Purposes
- */
-
-const ap5 = document.querySelector('.temp-5');
-
-
-/**
- * Main Code Starts here
- */
-
-const box = document.querySelectorAll('.box');
-let num, place, activePlayer = 'player1', abortPlayer, con, clickedPawn;
-
-let Data = {
-    player1: {
-        pawnPlace: [null, null, null, null],
-        color: 'green',
-        winNum: [5, 6, 13, 100],
-        winPos: [false, false, false, false],
-        winThis: [false, false, false, false],
-        winPawns: [false, false, false, false],
-        winMove: [false, false, false, false],
-        overlapped: false,
-        pawnStyle: [g1, g2, g3, g4],
-        pawnStr: ['g1', 'g2', 'g3', 'g4'],
-        startingPoint: 14,
-        winPlace: 18,
-        difference: null,
-        diceNos: [null, null, null],
-        activeDiff: null,
-        farFromWin: [null, null, null, null],
-    },
-    player2: {
-        pawnPlace: [null, null, null, null],
-        color: 'blue',
-        winNum: [18, 19, 26, 100],
-        winPos: [false, false, false, false],
-        winThis: [false, false, false, false],
-        winPawns: [false, false, false, false],
-        winMove: [false, false, false, false],
-        overlapped: false,
-        pawnStyle: [b1, b2, b3, b4],
-        pawnStr: ['b1', 'b2', 'b3', 'b4'],
-        startingPoint: 27,
-        winPlace: 31,
-        difference: null,
-        diceNos: [null, null, null],
-        activeDiff: null,
-        farFromWin: [null, null, null, null],
-    },
-    player3: {
-        pawnPlace: [null, null, null, null],
-        color: 'red',
-        winNum: [1, 10, 44, 45, 52, 100],
-        winPos: [false, false, false, false],
-        winThis: [false, false, false, false],
-        winPawns: [false, false, false, false],
-        winMove: [false, false, false, false],
-        overlapped: false,
-        pawnStyle: [r1, r2, r3, r4],
-        pawnStr: ['r1', 'r2', 'r3', 'r4'],
-        startingPoint: 1,
-        winPlace: 5,
-        difference: null,
-        diceNos: [null, null, null],
-        activeDiff: null,
-        farFromWin: [null, null, null, null],
-    },
-    player4: {
-        pawnPlace: [null, null, null, null],
-        color: 'yellow',
-        winNum: [31, 32, 39, 100],
-        winPos: [false, false, false, false],
-        winThis: [false, false, false, false],
-        winPawns: [false, false, false, false],
-        winMove: [false, false, false, false],
-        overlapped: false,
-        pawnStyle: [y1, y2, y3, y4],
-        pawnStr: ['y1', 'y2', 'y3', 'y4'],
-        startingPoint: 40,
-        winPlace: 44,
-        difference: null,
-        diceNos: [null, null, null],
-        activeDiff: null,
-        farFromWin: [null, null, null, null],
-    }
-};
-
-function movePawn(startingPoint, pawn) {
-
-    let posi = checkWinEntrance({
-        color: Data[activePlayer].color[0],
-        num: Data[activePlayer].winNum
-    }, pawn);
-    loopingAround(startingPoint, posi);
-
-    const winPos = Data[activePlayer].winPos[pawn[pawn.length - 1] - 1];
-    const winID = `win${Data[activePlayer].color[0]}`;
-
-    if (winPos) {
-        Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] = parseInt(place.dataset[winID]);
-    } else {
-        Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] = parseInt(place.dataset.id);
-    }
-    Data[activePlayer].difference = Data[activePlayer].diceNos[0] + Data[activePlayer].diceNos[1] + Data[activePlayer].diceNos[2];
-    const html = `<div class="clickable-${Data[activePlayer].color[0]}-${pawn[pawn.length - 1]} pawn ${pawn} ${Data[activePlayer].color[0]}">${pawn[pawn.length - 1]}</div>`;
-
-    place.insertAdjacentHTML('beforeend', html);
-    checkDualPawns('player1', 'player2');
-    checkDualPawns('player1', 'player3');
-    checkDualPawns('player1', 'player4');
-
-    checkDualPawns('player3', 'player2');
-    checkDualPawns('player4', 'player2');
-    checkDualPawns('player4', 'player3');
-
-    checkRevolvedPawns(pawn);
+function Player(name, color) {
+    this.name = name;
+    this.color = color;
+    this.curPos = null;
+    // this.parent = null;
+    this.curPawnNo = null;
+    this.curPawnEl = null;
+    this.place = null;
+    this.pawnPlace = [null, null, null, null];
+    this.openPawns = [false, false, false, false];
+    this.commonPlace = [null, null, null, null];
+    this.diceNos = [];
+    this.gotDices = [];
+    this.readyToMove = false;
+    this.selDice = [null, null];
+    this.overlappedPawn = [null, null, null, null];
+    this.overlapped = false;
+    this.oneOpen = false;
+    this.availTurn = [];
 }
+// let players = ["player1", "player2", "player3", "player4"];
 
-function firstMovePawn(point, pawn) {
-    num = 0;
-    startThis(point, 'id');
+let showInfo = document.querySelector('.showInfo');
 
-    Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] = parseInt(place.dataset.id);
-    const html = `<div class="clickable-${Data[activePlayer].color[0]}-${pawn[pawn.length - 1]} pawn ${pawn} ${Data[activePlayer].color[0]}">${pawn[pawn.length - 1]}</div>`;
+let player1 = new Player("Saurabh Singh", "r");
+let player2 = new Player("Suraj Singh", "g");
+let player3 = new Player("Ramesh Singh", "b");
+let player4 = new Player("Rekha Singh", "y");
 
-    place.insertAdjacentHTML('beforeend', html);
-}
+let curPlayer = player1;
 
-function displayDiceNos() {
-    let player;
-        if(activePlayer === 'player1') {
-            player = eval('showG');
-        } else if(activePlayer === 'player2') {
-            player = eval('showB');
-        } else if(activePlayer === 'player3') {
-            player = eval('showR');
-        } else if(activePlayer === 'player4') {
-            player = eval('showY');
-        }
+let pawn = document.querySelectorAll('.pawn');
+let ludoTracks = document.querySelector('.ludo__tracks');
+let ludoPlayersPawn = document.querySelector('.ludo__players');
+const change = document.querySelector('.temp-5');
+const revolve = document.querySelector('.temp-6');
+const voice = document.querySelector('.temp-7');
+// ludoContainer.addEventListener('click', e => {
+//     if(e.srcElement.classList[0] == 'pawn') {
+//
+//     }
+//
+// });
 
-        player.innerHTML = '';
+// change.addEventListener('click', () => {
+//     changePlayer();
+// });
 
-        if(Data[activePlayer].diceNos[0] !== null) {
-            player.insertAdjacentHTML("beforeend", `${Data[activePlayer].diceNos[0]} `);
-        }
-        if(Data[activePlayer].diceNos[1] !== null) {
-            player.insertAdjacentHTML("beforeend", `${Data[activePlayer].diceNos[1]} `);
-        }
-        if(Data[activePlayer].diceNos[2] !== null) {
-            player.insertAdjacentHTML("beforeend", `${Data[activePlayer].diceNos[2]}`);
-        }
-}
 
-function pawns(pawn, actPlayer, startingPoint, pawnDOM) {
-    home.addEventListener('click', function (e) {
-        if (e.target === pawn) {
-            if (actPlayer === activePlayer) {
-                if(Data[activePlayer].diceNos[0] === 1 || Data[activePlayer].diceNos[0] === 6 || Data[activePlayer].diceNos[1] === 1 || Data[activePlayer].diceNos[1] === 6 || Data[activePlayer].diceNos[2] === 1 || Data[activePlayer].diceNos[2] === 6) {
-                    if(Data[activePlayer].diceNos[2] === 1) {
-                        Data[activePlayer].diceNos[2] = null;
-                    } else if(Data[activePlayer].diceNos[0] === 6 && Data[activePlayer].diceNos[1] === 1 || Data[activePlayer].diceNos[1] === 6) {
-                        Data[activePlayer].diceNos[1] = null;
-                    } else {
-                        Data[activePlayer].diceNos[0] = null;
-                    }
+ludoTracks.addEventListener('click', e => {
+    let cur = e.target;
+    if(e.srcElement.classList[0] == 'pawn') {
 
-                    displayDiceNos();
+        if(curPlayer.color === cur.classList[2]) {
+            let pawnColor = cur.dataset.pawn.slice(0, -1);
 
-                    firstMovePawn(startingPoint, pawnDOM);
-                    pawn.style.display = 'none';
+            // curPlayer.parent = cur.parentElement;
 
-                    if(Data[activePlayer].diceNos[0] === null && Data[activePlayer].diceNos[1] === null && Data[activePlayer].diceNos[2] === null) {
-                        changePlayer();
-                    }
-                } else {
-                    console.log('Your pawn is still locked cause no 1 or 6 on the dice');
-                }
+            curPlayer.curPawnNo = e.srcElement.classList[1].slice(7);
+            curPlayer.curPawnEl = cur;
+            curPlayer.pawnPlace[curPlayer.curPawnNo - 1] = eval(cur.parentElement.dataset[pawnColor]);
+
+            if(curPlayer.readyToMove) {
+                movePawn(cur);
             }
+
+            // console.log('its matching');
         }
-    });
-}
 
-pawns(pawnG1, 'player1', 14, g1);
-pawns(pawnG2, 'player1', 14, g2);
-pawns(pawnG3, 'player1', 14, g3);
-pawns(pawnG4, 'player1', 14, g4);
-
-pawns(pawnB1, 'player2', 27, b1);
-pawns(pawnB2, 'player2', 27, b2);
-pawns(pawnB3, 'player2', 27, b3);
-pawns(pawnB4, 'player2', 27, b4);
-
-pawns(pawnR1, 'player3', 1, r1);
-pawns(pawnR2, 'player3', 1, r2);
-pawns(pawnR3, 'player3', 1, r3);
-pawns(pawnR4, 'player3', 1, r4);
-
-pawns(pawnY1, 'player4', 40, y1);
-pawns(pawnY2, 'player4', 40, y2);
-pawns(pawnY3, 'player4', 40, y3);
-pawns(pawnY4, 'player4', 40, y4);
+    }
+});
 
 function changePlayer() {
-    Data[activePlayer].difference = null;
-    Data[activePlayer].diceNos[0] = null;
-    Data[activePlayer].diceNos[1] = null;
-    Data[activePlayer].diceNos[2] = null;
+    let score;
+    let activePlayer;
 
-    if(activePlayer === 'player1') {
-        activePlayer = 'player2';
-        homeB.classList.add('active');
-        homeG.classList.remove('active');
-    } else if(activePlayer === 'player2') {
-        activePlayer = 'player3';
-        homeR.classList.add('active');
-        homeB.classList.remove('active');
-    } else if(activePlayer === 'player3') {
-        activePlayer = 'player4';
-        homeY.classList.add('active');
-        homeR.classList.remove('active');
-    } else if(activePlayer === 'player4') {
-        activePlayer = 'player1';
-        homeG.classList.add('active');
-        homeY.classList.remove('active');
+
+    let player1Show = document.querySelector(`.ludo__players--home .ludo__players--home-r .activePlayer`);
+    let player2Show = document.querySelector(`.ludo__players--home .ludo__players--home-g .activePlayer`);
+    let player3Show = document.querySelector(`.ludo__players--home .ludo__players--home-b .activePlayer`);
+    let player4Show = document.querySelector(`.ludo__players--home .ludo__players--home-y .activePlayer`);
+    player1Show.classList.remove('showThis');
+    player2Show.classList.remove('showThis');
+    player3Show.classList.remove('showThis');
+    player4Show.classList.remove('showThis');
+
+    if(curPlayer === player1) {
+        // curPlayer.availTurn = [];
+        curPlayer = player2;
+        // curPlayer.availTurn.push(1);
+    } else if(curPlayer === player2) {
+        // curPlayer.availTurn = [];
+        curPlayer = player3;
+        // curPlayer.availTurn.push(1);
+    } else if(curPlayer === player3) {
+        // curPlayer.availTurn = [];
+        curPlayer = player4;
+        // curPlayer.availTurn.push(1);
+    } else if(curPlayer === player4) {
+        // curPlayer.availTurn = [];
+        curPlayer = player1;
+        // curPlayer.availTurn.push(1);
     }
 
-    console.log(activePlayer);
+    activePlayer = document.querySelector(`.ludo__players--home .ludo__players--home-${curPlayer.color} .activePlayer`);
+    score = document.querySelector(`.score__container-${curPlayer.color}`)
+    score.innerHTML = '';
+    activePlayer.classList.add('showThis');
+
+    getInput();
+
+    // console.log(curPlayer.color);
 }
 
-function clickableElements(event, i, j) {
-    let pawn = `${Data[activePlayer].color[i]}${j}`;
-    Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1] = null;
-
-    if(Data[activePlayer].diceNos[0] === null && Data[activePlayer].diceNos[1] === null && Data[activePlayer].diceNos[2] === null) {
-        if(!Data[activePlayer].overlapped) {
-            changePlayer();
+function removeRanDices() {
+    curPlayer.gotDices.filter((cur, ind) => {
+        if(cur === curPlayer.selDice[0]) {
+            curPlayer.gotDices.splice(ind, 1);
         }
-        Data[activePlayer].overlapped = false;
-    } else {
-        if(Data[activePlayer].diceNos[0] !== null && Data[activePlayer].diceNos[0] <= 6) {
-            Data[activePlayer].activeDiff = Data[activePlayer].diceNos[0];
-            Data[activePlayer].diceNos[0] = null;
-        } else
+    });
+}
 
-        if(Data[activePlayer].diceNos[1] !== null && Data[activePlayer].diceNos[1] <= 6) {
-            Data[activePlayer].activeDiff = Data[activePlayer].diceNos[1];
-            Data[activePlayer].diceNos[1] = null;
-        } else
+function checkOverlapping(pl1, pl2) {
+    let abortPlayer, pawnNo;
 
-        if(Data[activePlayer].diceNos[2] !== null && Data[activePlayer].diceNos[2] < 6) {
-            Data[activePlayer].activeDiff = Data[activePlayer].diceNos[2];
-            Data[activePlayer].diceNos[0] = null;
-            Data[activePlayer].diceNos[2] = null;
+    pl1.commonPlace.forEach((cur1, ind1) => {
+        pl2.commonPlace.forEach((cur2, ind2) => {
+                if(cur1 === cur2 && cur1 !== null) {
+                    if(cur1 !== 0 && cur1 !== 8 && cur1 !== 13 && cur1 !== 21 && cur1 !== 26 && cur1 !== 34 && cur1 !== 39 && cur1 !== 47) {
+                        if(curPlayer === pl1) {
+                            abortPlayer = pl2;
+                            pawnNo = ind2;
+                        } else if(curPlayer === pl2) {
+                            abortPlayer = pl1;
+                            pawnNo = ind1;
+                        }
+                        abortPlayer.overlappedPawn[pawnNo] = true;
+                        abortPlayer.pawnPlace[pawnNo] = null;
+                        abortPlayer.commonPlace[pawnNo] = null;
+                        abortPlayer.openPawns[pawnNo] = false;
+                        curPlayer.overlapped = true;
+                        // console.log(pawnNo);
+                        let htmlPlace = document.querySelector(`.ludo__players--home-${abortPlayer.color} .ludo__players--home__place[data-place="${pawnNo + 1}"]`);
+                        let insertHtml = `<div class="pawn pawn-${abortPlayer.color}-${pawnNo} ${abortPlayer.color}" data-pawn="${abortPlayer.color}${pawnNo}">${pawnNo + 1}</div>`;
+
+                        let removePlace = document.querySelector(`.box[data-id="${cur1}"]`);
+
+                        // htmlPlace.insertAdjacentHTML('beforeend', insertHtml);
+                        htmlPlace.childNodes[0].style.display = 'flex';
+
+                        removePlace.removeChild(removePlace.childNodes[0]);
+                    }
+                } else {
+                    curPlayer.overlapped = false;
+                }
+        })
+    })
+}
+
+
+
+ludoPlayersPawn.addEventListener('click', e => {
+    // console.log(e.target);
+    if(e.srcElement.classList[0] == 'pawn') {
+
+        if(curPlayer.readyToMove) {
+            openPawn(e.srcElement.parentElement);
+        }
+    }
+});
+
+
+function openPawn(e) {
+    let score = document.querySelector(`.score__container-${curPlayer.color}`), timer;
+
+    if(curPlayer.color === e.childNodes[0].classList[2]) {
+        if(curPlayer.selDice[0] === 1 || curPlayer.selDice[0] === 6) {
+
+            showInfo.innerHTML = `Opening pawn no. ${e.childNodes[0].classList[1].slice(7)}`;
+            showInfo.classList.add('cum');
+
+            e.childNodes[0].style.display = 'none';
+
+            let newPlace = document.querySelector(`.box[data-${curPlayer.color}="0"]`);
+            let newhtml = `<div class="pawn pawn-${curPlayer.color}-${e.childNodes[0].classList[1].slice(7)} ${curPlayer.color}" data-pawn="${curPlayer.color}${e.childNodes[0].classList[1].slice(7)}">${e.childNodes[0].classList[1].slice(7)}</div>`;
+
+            newPlace.insertAdjacentHTML('beforeend', newhtml);
+            curPlayer.pawnPlace[e.childNodes[0].classList[1].slice(7) - 1] = 0;
+            curPlayer.commonPlace[e.childNodes[0].classList[1].slice(7) - 1] = eval(newPlace.dataset.id);
+            curPlayer.openPawns[e.childNodes[0].classList[1].slice(7) - 1] = true;
+
+            /* Removing dice no from the data structure which is already ran by the pawn */
+            removeRanDices();
+            checkTurnIsOver();
+
+            score.removeChild(curPlayer.selDice[1]);
+            curPlayer.selDice[0] = null;
+            curPlayer.selDice[1] = null;
+
+            if(curPlayer.gotDices.length > 0) {
+                curPlayer.selDice[0] = curPlayer.gotDices[0];
+                curPlayer.selDice[1] = score.childNodes[0];
+
+                score.childNodes[0].classList.add('active');
+            }
+
+            // Setting up auto Move
+            timer = autoMove();
         }
 
-        displayDiceNos();
-        event.srcElement.parentElement.removeChild(event.target);
-        movePawn(Data[activePlayer].pawnPlace[i], pawn);
 
+        getInput();
 
-
-        if(Data[activePlayer].diceNos[0] === null && Data[activePlayer].diceNos[1] === null && Data[activePlayer].diceNos[2] === null) {
-            if(!Data[activePlayer].overlapped) {
+        // console.log(e.target);
+        // let turnIsOver = checkTurnIsOver();
+        if(!curPlayer.gotDices.length > 0) {
+            setTimeout(() => {
+                // console.log('its changing from openPawn');
                 changePlayer();
-            }
+            }, 152 * timer);
         }
-    }
 
+        setTimeout(() => {
+            showInfo.innerHTML = '';
+            showInfo.classList.remove('cum');
+        }, 152 * timer);
+    }
 }
 
-box.forEach(parentCur => {
-    parentCur.addEventListener('click', (e) => {
-        const classes = e.srcElement.classList;
-        classes.forEach(cur => {
-            let pawn;
-            if (cur === `clickable-${Data[activePlayer].color[0]}-1`) {
-                pawn = `${Data[activePlayer].color[0]}-1`;
-                clickedPawn = 'first';
-                if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
-                    if(Data[activePlayer].winMove[pawn[pawn.length - 1] - 1]) {
-                        console.log(Data[activePlayer].farFromWin);
-                        console.log(Data[activePlayer].difference);
-                        if(Data[activePlayer].difference <= Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1]) {
-                            clickableElements(e, 0, 1);
-                        } else {
-                            if(Data[activePlayer].pawnPlace[1] === null && Data[activePlayer].pawnPlace[2] === null && Data[activePlayer].pawnPlace[3] === null) {
-                                changePlayer();
-                            }
-                        }
-                    }
-                } else {
-                    clickableElements(e, 0, 1);
-                }
-            } else
-            if (cur === `clickable-${Data[activePlayer].color[0]}-2`) {
-                pawn = `${Data[activePlayer].color[0]}-2`;
-                clickedPawn = 'second';
-                if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
-                    if(Data[activePlayer].winMove[pawn[pawn.length - 1] - 1]) {
-                        console.log(Data[activePlayer].farFromWin);
-                        console.log(Data[activePlayer].difference);
-                        if(Data[activePlayer].difference <= Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1]) {
-                            clickableElements(e, 1, 2);
-                        } else {
-                            if(Data[activePlayer].pawnPlace[0] === null && Data[activePlayer].pawnPlace[2] === null && Data[activePlayer].pawnPlace[3] === null) {
-                                changePlayer();
-                            }
-                        }
-                    }
-                } else {
-                    clickableElements(e, 1, 2);
-                }
-            } else
-            if (cur === `clickable-${Data[activePlayer].color[0]}-3`) {
-                pawn = `${Data[activePlayer].color[0]}-3`;
-                clickedPawn = 'third';
-                if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
-                    if(Data[activePlayer].winMove[pawn[pawn.length - 1] - 1]) {
-                        console.log(Data[activePlayer].farFromWin);
-                        console.log(Data[activePlayer].difference);
-                        if(Data[activePlayer].difference <= Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1]) {
-                            clickableElements(e, 2, 3);
-                        } else {
-                            if(Data[activePlayer].pawnPlace[0] === null && Data[activePlayer].pawnPlace[1] === null && Data[activePlayer].pawnPlace[3] === null) {
-                                changePlayer();
-                            }
-                        }
-                    }
-                } else {
-                    clickableElements(e, 2, 3);
-                }
-            } else
-            if (cur === `clickable-${Data[activePlayer].color[0]}-4`) {
-                pawn = `${Data[activePlayer].color[0]}-4`;
-                clickedPawn = 'forth';
-                if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
-                    if(Data[activePlayer].winMove[pawn[pawn.length - 1] - 1]) {
-                        console.log(Data[activePlayer].farFromWin);
-                        console.log(Data[activePlayer].difference);
-                        if(Data[activePlayer].difference <= Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1]) {
-                            clickableElements(e, 3, 4);
-                        } else {
-                            if(Data[activePlayer].pawnPlace[0] === null && Data[activePlayer].pawnPlace[1] === null && Data[activePlayer].pawnPlace[2] === null) {
-                                changePlayer();
-                            }
-                        }
-                    }
-                } else {
-                    clickableElements(e, 3, 4);
-                }
-            }
-        })
-    });
-});
+function movePawn(cur) {
+    // console.log('Move Pawn Function has started');
+    console.log(cur);
+    let toMove = curPlayer.pawnPlace[curPlayer.curPawnNo - 1] + parseInt(curPlayer.selDice[0]);
+    let place = null;
+    let pawnColor = cur.dataset.pawn.slice(0, -1);
+    let score = document.querySelector(`.score__container-${curPlayer.color}`);
 
-setInterval(() => {
-    let pawn;
-    if(clickedPawn === 'first') {
-        pawn = `${Data[activePlayer].color[0]}${1}`;
-    } else if(clickedPawn === 'second') {
-        pawn = `${Data[activePlayer].color[1]}${2}`;
-    } else if(clickedPawn === 'third') {
-        pawn = `${Data[activePlayer].color[2]}${3}`;
-    } else if(clickedPawn === 'forth') {
-        pawn = `${Data[activePlayer].color[3]}${4}`;
-    }
+    console.log(toMove);
+    if(toMove >= 1 && toMove <= 56) {
 
-    if(pawn) {
-        if(Data[activePlayer].pawnPlace[0] !== null || Data[activePlayer].pawnPlace[1] !== null || Data[activePlayer].pawnPlace[2] !== null || Data[activePlayer].pawnPlace[3] !== null) {
-            if(Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] > 2 && Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] < 7) {
-                evalWinDice(pawn);
-            }
+        setTimeout(() => {
+            cur.parentElement.removeChild(cur);
+
+            showInfo.innerHTML = `Moving pawn no. ${curPlayer.curPawnNo}`;
+            showInfo.classList.add('cum');
+        }, 150);
+        let c = 1;
+        for(let i = curPlayer.pawnPlace[curPlayer.curPawnNo - 1] + 1; i <= toMove; i++) {
+            (function (i) {
+                setTimeout(function () {
+
+                    if(place != null) {
+                        place.removeChild(place.childNodes[place.childNodes.length - 1]);
+                    }
+
+                    place = document.querySelector(`.box[data-${curPlayer.color}="${i}"]`);
+                    let html = `<div class="pawn pawn-${curPlayer.color}-${curPlayer.curPawnNo} ${curPlayer.color}" data-pawn="${curPlayer.color}${curPlayer.curPawnNo}">${curPlayer.curPawnNo}</div>`;
+
+                    place.insertAdjacentHTML('beforeend', html);
+
+                    curPlayer.place = place;
+                }, 150*c);
+            })(i);
+            c++;
         }
 
-        if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
-            Data[activePlayer].winMove[pawn[pawn.length - 1] - 1] = true;
-            console.log('Its inside the red pawn');
-        }
+        setTimeout(() => {
+            curPlayer.pawnPlace[curPlayer.curPawnNo - 1] = eval(curPlayer.place.dataset[pawnColor]);
+            curPlayer.commonPlace[curPlayer.curPawnNo - 1] = eval(curPlayer.place.dataset.id);
+        }, 150 * c);
+        // changePlayer();
+
+        setTimeout(() => {
+            if(curPlayer === player1) {
+                checkOverlapping(curPlayer, player2);
+                checkOverlapping(curPlayer, player3);
+                checkOverlapping(curPlayer, player4);
+            } else if(curPlayer === player2) {
+                checkOverlapping(curPlayer, player1);
+                checkOverlapping(curPlayer, player3);
+                checkOverlapping(curPlayer, player4);
+            } else if(curPlayer === player3) {
+                checkOverlapping(curPlayer, player1);
+                checkOverlapping(curPlayer, player2);
+                checkOverlapping(curPlayer, player4);
+            } else if(curPlayer === player4) {
+                checkOverlapping(curPlayer, player1);
+                checkOverlapping(curPlayer, player2);
+                checkOverlapping(curPlayer, player3);
+            }
+        },150*c);
+
+        /* Removing show Info class */
+        setTimeout(() => {
+            showInfo.innerHTML = '';
+            showInfo.classList.remove('cum');
+        }, 251 * c);
+
+        /* Removing dice no from the data structure which is already ran by the pawn */
+        removeRanDices();
+
+        setTimeout(() => {
+            score.removeChild(curPlayer.selDice[1]);
+            curPlayer.selDice[0] = null;
+            curPlayer.selDice[1] = null;
+
+            if(curPlayer.gotDices.length > 0) {
+                curPlayer.selDice[0] = curPlayer.gotDices[0];
+                curPlayer.selDice[1] = score.childNodes[0];
+
+                score.childNodes[0].classList.add('active');
+            }
+
+        // Setting up auto Move
+            autoMove();
+
+            getInput();
+
+        },150*c);
+
+            setTimeout(() => {
+                let turnIsOver = checkTurnIsOver();
+                if(turnIsOver) {
+                    // console.log('its changing from movePawn');
+                    changePlayer();
+                }
+            }, 151*c);
     }
-
-
-
-    if(Data[activePlayer].winPos[0] || Data[activePlayer].winPos[1] || Data[activePlayer].winPos[2] || Data[activePlayer].winPos[3]) {
-        checkWinEntrance({
-            color: Data[activePlayer].color[0],
-            num: Data[activePlayer].winNum
-        }, pawn);
-        evalWinDice(pawn);
-        resetWonPawns(pawn);
-    }
-});
-
-function evalWinDice(pawn) {
-    Data[activePlayer].farFromWin[pawn[pawn.length - 1] - 1] = Data[activePlayer].winPlace - Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1];
+    return c;
 }
 
-function loopingAround(startingPoint, posy) {
-    num = startingPoint;
-    num += Data[activePlayer].activeDiff;
-    Data[activePlayer].activeDiff = null;
-    if (num === 58 || num === 57 || num === 56 || num === 55 || num === 54 || num === 53) {
-        if (num === 53) {
-            num = 1;
-        } else if (num === 54) {
-            num = 2;
-        } else if (num === 55) {
-            num = 3;
-        } else if (num === 56) {
-            num = 4;
-        } else if (num === 57) {
-            num = 5;
-        } else if (num === 58) {
-            num = 6;
-        }
-    }
-    place = document.querySelector(`.box[data-${posy}="${num}"]`);
-}
-
-function startThis(point, posy) {
-    place = document.querySelector(`.box[data-${posy}="${point}"]`);
-}
-
-
-function checkWinEntrance({
-                              color,
-                              num
-                          }, pawn) {
-    const pos = Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1];
-    const winPosy = Data[activePlayer].winPos[pawn[pawn.length - 1] - 1]
-    // [2, 6, 13, 100]
-    if (color !== 'r') {
-        if (pos >= num[1]) {
-            Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = true;
-        }
-        if (winPosy) {
-            if (pos > num[0] && pos < num[3]) {
-                if (pos > (num[2] - 1)) {
-                    Data[activePlayer].winThis[pawn[pawn.length - 1] - 1] = true;
-                }
-                return `win${color}`;
-            }
-        } else {
-            // if (pos > num[0] && pos < num[2]) {
-            if (pos > num[0] && pos < num[2]) {
-                return `win${color}`;
-            } else {
-                Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = false;
-                return 'id';
-            }
-        }
+function checkTurnIsOver() {
+    if(!curPlayer.gotDices.length > 0 && !curPlayer.overlapped) {
+        return true;
     } else {
-        // [1, 4, 46, 51, 52, 100]
-        if (pos >= num[3] || pos >= num[0] && pos < num[1]) {
-            Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = true;
-        }
-        if (winPosy) {
-            if (pos >= num[3] || pos >= num[0] && pos < num[1]) {
-                if (pos >= num[3] || pos >= num[0] && pos < num[1]) {
-                    Data[activePlayer].winThis[pawn[pawn.length - 1] - 1] = true;
-                }
-                return `win${color}`;
-            }
-        } else {
-            if (pos > num[2] && pos < num[4]) {
-                return `win${color}`;
-            } else {
-                Data[activePlayer].winPos[pawn[pawn.length - 1] - 1] = false;
-                return 'id';
-            }
-        }
-    }
-}
-
-function checkDualPawns(pl1, pl2) {
-    Data[pl1].winPos.forEach((cur1, ind1) => {
-        Data[pl2].winPos.forEach((cur2, ind2) => {
-            if (!cur1 && !cur2 && Data[pl1].pawnPlace[ind1] !== null && Data[pl2].pawnPlace[ind2] !== null) {
-
-                Data[pl1].pawnPlace.forEach((curL, indL) => {
-                    Data[pl2].pawnPlace.forEach((curS, indS) => {
-                        if (curL !== null && curS !== null && curL === curS) {
-                            activePlayer === `${pl1}` ? abortPlayer = `${pl2}` : abortPlayer = `${pl1}`;
-                            if (activePlayer === pl2) {
-                                con = Data[abortPlayer].pawnPlace.indexOf(curL);
-                            } else if (activePlayer === pl1) {
-                                con = Data[abortPlayer].pawnPlace.indexOf(curS);
-                            }
-                            // Data[abortPlayer].pawn[con].ovlp = true;
-                            if (curS === 1 || curS === 9 || curS === 14 || curS === 22 || curS === 27 || curS === 35 || curS === 40 || curS === 48) {
-
-                            } else {
-                                if(!Data[abortPlayer].winThis[con]) {
-                                    Data[activePlayer].overlapped = true;
-                                    resetPawns();
-                                }
-                            }
-                        } else if (curL !== null && curS !== null && curL !== curS) {
-                            activePlayer === `${pl1}` ? abortPlayer = `${pl2}` : abortPlayer = `${pl1}`;
-                            if (activePlayer === pl2) {
-                                con = Data[abortPlayer].pawnPlace.indexOf(curL);
-                            } else if (activePlayer === pl1) {
-                                con = Data[abortPlayer].pawnPlace.indexOf(curS);
-                            }
-                        }
-                    })
-                })
-            }
-        })
-    });
-}
-
-function resetPawns() {
-    Data[abortPlayer].pawnPlace[con] = null;
-    const caughtPawn = `pawn${Data[abortPlayer].color[0].toUpperCase()}${con + 1}`;
-    eval(caughtPawn).style.display = 'flex';
-    place.children[0].parentElement.removeChild(place.children[0]);
-}
-
-function createElement(start, color, end) {
-    for (let i = start; i < end; i++) {
-        const html = `<div class="boxCol box none" data-win${color}="${i}">${i}</div>`;
-        document.querySelector('.wastes').insertAdjacentHTML('beforeend', html);
-    }
-}
-
-createElement(18, 'g', 24);
-createElement(30, 'b', 36);
-createElement(43, 'y', 49);
-createElement(5, 'r', 11);
-
-function checkRevolvedPawns(pawn) {
-    const position = Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1];
-    const winPosy = Data[activePlayer].winPos[pawn[pawn.length - 1] - 1];
-
-    if (position >= Data[activePlayer].winPlace && winPosy) {
-        Data[activePlayer].winPawns[pawn[pawn.length - 1] - 1] = true;
-
-        if (Data[activePlayer].winPawns[0] && Data[activePlayer].winPawns[1] && Data[activePlayer].winPawns[2] && Data[activePlayer].winPawns[3]) {
-        }
-
+        return false;
     }
 }
 
@@ -603,60 +345,149 @@ function revolveDice() {
     return number;
 }
 
-function displayDice(n) {
-    document.querySelector('.ludo__dice').innerHTML = `<img class="dice" src="./images/dice-${n}.png" alt="">`;
+function displayDice(num) {
+
+    let dice = document.querySelector('.dice');
+    dice.style.transform = `rotateZ(720deg)`;
+
+    setTimeout(() => {
+        dice.style.transform = `rotateZ(1440deg)`;
+        dice.setAttribute("src", `./images/${num}.jpg`);
+    }, 250);
+
+    dice.style.transform = `rotateZ(0deg)`;
 }
 
-ap5.addEventListener('click', () => {
-    Data[activePlayer].diceNos[0] = null;
-    Data[activePlayer].diceNos[1] = null;
-    Data[activePlayer].diceNos[2] = null;
 
-    Data[activePlayer].diceNos[0] = revolveDice();
+function getDiceNos() {
+    let diceNo = revolveDice();
+    return diceNo;
+}
 
-    if(Data[activePlayer].diceNos[0] === 6) {
-        Data[activePlayer].diceNos[1] = revolveDice();
-    }
+revolve.addEventListener('click', () => {
 
-    if(Data[activePlayer].diceNos[1] === 6) {
-        Data[activePlayer].diceNos[2] = revolveDice();
-    }
+    let dice = getDiceNos();
 
-    displayDiceNos();
-
-    if(Data[activePlayer].diceNos[2] === 6) {
-        Data[activePlayer].diceNos[0] = null;
-        Data[activePlayer].diceNos[1] = null;
-        Data[activePlayer].diceNos[2] = null;
-
-        console.log('Six comes 3 times');
-        changePlayer();
-    }
-
-    console.log(Data[activePlayer].diceNos);
-
-    if(Data[activePlayer].pawnPlace[0] === null && Data[activePlayer].pawnPlace[1] === null && Data[activePlayer].pawnPlace[2] === null && Data[activePlayer].pawnPlace[3] === null) {
-        if(Data[activePlayer].diceNos[0] === 1 || Data[activePlayer].diceNos[0] === 6 || Data[activePlayer].diceNos[1] === 1 || Data[activePlayer].diceNos[1] === 6 || Data[activePlayer].diceNos[2] === 1 || Data[activePlayer].diceNos[2] === 6) {
-            console.log('Your pawns are opened, click to open');
-        } else {
-            changePlayer();
-        }
-    } else {
-        console.log('Run your opened pawn');
-    }
-
-    if(Data[activePlayer].overlapped) {
-        Data[activePlayer].overlapped = false;
-    }
-
-    Data[activePlayer].difference = Data[activePlayer].diceNos[0] + Data[activePlayer].diceNos[1] + Data[activePlayer].diceNos[2];
+    pushDices(dice);
+    pushToUI();
+    // console.log(dice);
 });
 
-function resetWonPawns(pawn) {
-    if(Data[activePlayer].winThis[pawn[pawn.length - 1] - 1]) {
-        if(Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] >= (Data[activePlayer].winPlace - 1)) {
-            Data[activePlayer].pawnPlace[pawn[pawn.length - 1] - 1] = 'win';
-            console.log(`Winner Pawn is resetted`);
+function pushDices(dice) {
+    let score = document.querySelector(`.score__container-${curPlayer.color}`);
+    if(curPlayer.diceNos[0] && curPlayer.diceNos[curPlayer.diceNos.length - 1] === 6) {
+
+        getInput();
+
+        curPlayer.diceNos.push(dice);
+        curPlayer.gotDices.push(dice);
+        if(curPlayer.diceNos[curPlayer.diceNos.length - 1] !== 6) {
+            curPlayer.readyToMove = true;
+
+            getInput();
         }
+        if(curPlayer.diceNos[2] === 6) {
+            curPlayer.readyToMove = false;
+
+            setTimeout(() => {
+                curPlayer.diceNos = [];
+                curPlayer.gotDices = [];
+            },501);
+
+            // console.log('Six comes three times');
+            setTimeout(() => {
+                changePlayer();
+            },502);
+            getInput();
+
+            // changePlayer();
+        }
+    } else {
+        curPlayer.diceNos = [];
+        curPlayer.gotDices = [];
+        score.innerHTML = '';
+        curPlayer.diceNos.push(dice);
+        curPlayer.gotDices.push(dice);
+        if(curPlayer.diceNos[curPlayer.diceNos.length - 1] === 6) {
+            curPlayer.readyToMove = false;
+
+            getInput();
+        } else {
+            curPlayer.readyToMove = true;
+
+            getInput();
+        }
+        // curPlayer.selDice[0] = score.childNodes[0];
+        setTimeout(() => {
+            curPlayer.selDice[0] = parseInt(score.childNodes[0].innerText);
+            curPlayer.selDice[1] = score.childNodes[0];
+            score.childNodes[0].classList.add('active');
+
+            // Setting up auto Move
+            autoMove();
+
+            // Setting up Change Player if no pawn is out
+            let open = false;
+            curPlayer.openPawns.forEach(cur => {
+                if(cur) {
+                    open = true;
+                }
+            });
+            if(!open && curPlayer.diceNos[curPlayer.diceNos.length - 1] !== 6 && curPlayer.diceNos[curPlayer.diceNos.length - 1] !== 1) {
+                changePlayer();
+            }
+        }, 510);
     }
 }
+
+function autoMove() {
+    let openCount = 0, index, target;
+    curPlayer.openPawns.forEach((cur, ind) => {
+        if(cur) {
+            openCount++;
+            index = ind;
+            curPlayer.curPawnNo = ind + 1;
+        }
+    });
+    if(openCount === 1 && curPlayer.gotDices.length > 0 && curPlayer.gotDices[0] !== 6 && curPlayer.gotDices[0] !== 1) {
+        let place = document.querySelector(`.box[data-${curPlayer.color}="${curPlayer.pawnPlace[index]}"]`);
+        place.childNodes.forEach(cur => {
+            if(cur.classList.contains(`pawn-${curPlayer.color}-${index+1}`)) {
+                target = cur;
+            }
+        });
+        let thisTimer = movePawn(target);
+        return thisTimer;
+        curPlayer.oneOpen = true;
+    } else {
+        curPlayer.oneOpen = false;
+    }
+}
+
+function pushToUI() {
+    let html = `<span>${curPlayer.diceNos[curPlayer.diceNos.length - 1]}</span>`;
+    let score = document.querySelector(`.score__container-${curPlayer.color}`);
+
+    setTimeout(() => {
+        score.insertAdjacentHTML('beforeend', html);
+    }, 500);
+
+    score.addEventListener('click', scoreEvent);
+}
+
+function scoreEvent(e) {
+    if(e.toElement.nodeName.toLowerCase() === 'span') {
+        curPlayer.selDice[1] = e.toElement;
+        curPlayer.selDice[0] = parseInt(e.toElement.innerText);
+        // console.log(e);
+
+        let siblings = e.target.parentElement.childNodes;
+        siblings.forEach(cur => {
+            cur.classList.remove('active');
+        });
+
+        e.target.classList.add('active');
+    }
+}
+
+voice.addEventListener('click', getInput);
