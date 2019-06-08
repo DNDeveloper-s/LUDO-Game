@@ -67,6 +67,7 @@ body {
     border-radius: 3px;
     overflow: hidden;
     box-shadow: 0 0 20px 10px rgba(0,0,0,0.3);
+    transition: 300ms;
 
     position: absolute;
     top: 50%;
@@ -343,10 +344,6 @@ body {
   //@include flexCenter();
 }
 
-.box {
-  //@include flexCenter();
-}
-
 .boxCol {
   position: relative;
   width: calc(100% / 6);
@@ -360,13 +357,10 @@ body {
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  //border: 4px solid lightgrey;
   box-shadow: 0 0 40px rgba(0,0,0,0.3);
-  background-image: url('../images/pawn.png');
-  //z-index: 1;
+  border: 4px solid lightgrey;
   cursor: pointer;
 
-  //@include absCenter();
   display: flex;
   justify-content: center;
   align-items: center;
@@ -374,7 +368,6 @@ body {
 
   &:hover {
     box-shadow: 0 0 20px rgba(0,0,0,0.6);
-    //transform: translateY(-2px);
   }
  }
 
@@ -433,6 +426,7 @@ body {
   transform: translateX(-50%);
   display: flex;
   z-index: 19999999;
+  transition: 300ms;
 
   > * {
     width: 300px;
@@ -672,4 +666,62 @@ body {
 .manual__panel.open {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1, 1);
+}
+
+.ludo__body.closed {
+  transform: translate(-50%, -60%) rotateX(20deg) translateX(1700px);
+}
+.temp.closed {
+  transform: translateX(-50%) translateY(-100px);
+}
+
+.menu {
+  position: absolute;
+  width: 20vw;
+  height: 50vh;
+  transition: 300ms;
+
+  @include absCenter();
+  @include flexCenter();
+  background: rgb(255, 49, 87);
+  z-index: 1;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) inset;
+  border-radius: 200px;
+
+   li {
+     list-style: none;
+     margin: 20px 0;
+     text-align: center;
+     text-decoration: none;
+     font-size: 23px;
+     font-weight: 500;
+     color: #ffffff;
+     transition: 300ms;
+
+      a {
+        text-decoration: none;
+        font-size: 23px;
+        font-weight: 500;
+        color: #ffffff;
+        transition: 300ms;
+
+        &:hover {
+          color: #c8c8c8;
+          transform: translateY(2px);
+        }
+      }
+
+     &:hover {
+       color: #c8c8c8;
+       transform: translateY(2px);
+     }
+  }
+}
+
+.menu.clicked {
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+.menu.closed {
+  transform: translate(-50%, -50%) translateX(-1200px);
 }

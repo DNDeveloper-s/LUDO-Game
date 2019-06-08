@@ -7,10 +7,12 @@ let closeSS = document.querySelector('.close_ss');
 
 manualBtn.addEventListener('click', () => {
     manualPanel.classList.add('open');
+    document.querySelector('.menu').classList.add('closed');
 });
 
 closeManual.addEventListener('click', () => {
     manualPanel.classList.remove('open');
+    document.querySelector('.menu').classList.remove('closed');
 });
 
 ssBtn.addEventListener('click', () => {

@@ -17,7 +17,6 @@ function Player(name, color) {
     this.overlappedPawn = [null, null, null, null];
     this.overlapped = false;
     this.oneOpen = false;
-    this.availTurn = [];
 }
 // let players = ["player1", "player2", "player3", "player4"];
 
@@ -55,8 +54,6 @@ ludoTracks.addEventListener('click', e => {
         if(curPlayer.color === cur.classList[2]) {
             let pawnColor = cur.dataset.pawn.slice(0, -1);
 
-            // curPlayer.parent = cur.parentElement;
-
             curPlayer.curPawnNo = e.srcElement.classList[1].slice(7);
             curPlayer.curPawnEl = cur;
             curPlayer.pawnPlace[curPlayer.curPawnNo - 1] = eval(cur.parentElement.dataset[pawnColor]);
@@ -65,11 +62,77 @@ ludoTracks.addEventListener('click', e => {
                 movePawn(cur);
             }
 
-            // console.log('its matching');
         }
 
     }
 });
+let hashLocation = window.location.hash.split('#');
+let playerCount = hashLocation[hashLocation.length - 1];
+let link = document.querySelectorAll('.link');
+console.log(playerCount);
+link.forEach(cur => {
+    cur.addEventListener('click', () => {
+        document.querySelector('.menu').classList.add('closed');
+        document.querySelector('.temp').classList.remove('closed');
+        document.querySelector('.ludo__body').classList.remove('closed');
+    });
+});
+
+document.querySelector('.back').addEventListener('click', () => {
+    document.querySelector('.menu').classList.remove('closed');
+    document.querySelector('.temp').classList.add('closed');
+    document.querySelector('.ludo__body').classList.add('closed');
+});
+
+window.addEventListener('hashchange', (e) => {
+    let url = e.newURL.split('/');
+    let hash = url[url.length - 1];
+    let playersCount = hash.split('#');
+    playerCount = playersCount[playersCount.length - 1];
+
+    appendPawns();
+});
+
+document.querySelector('.menu').addEventListener('mousedown', () => {
+   document.querySelector('.menu').classList.add('clicked');
+});
+
+appendPawns();
+function appendPawns() {
+    // document.querySelector('.ludo__players--home-g');
+    let colors;
+    for(let i = 0; i < 4; i++) {
+        if(i === 0) {
+            colors = 'r';
+        } else if(i === 1) {
+            colors = 'g';
+        } else if(i === 2) {
+            colors = 'b';
+        } else if(i === 3) {
+            colors = 'y';
+        }
+        for(let j = 0; j < 4; j++) {
+            let places = document.querySelector(`.ludo__players--home-${colors} .ludo__players--home__place[data-place="${j + 1}"]`);
+            places.innerHTML = '';
+        }
+    }
+    for(let i = 0; i < eval(playerCount); i++) {
+        if(i === 0) {
+            colors = 'r';
+        } else if(i === 1) {
+            colors = 'g';
+        } else if(i === 2) {
+            colors = 'b';
+        } else if(i === 3) {
+            colors = 'y';
+        }
+        for(let j = 0; j < 4; j++) {
+            let places = document.querySelector(`.ludo__players--home-${colors} .ludo__players--home__place[data-place="${j + 1}"]`);
+            places.innerHTML = `<div class="pawn pawn-${colors}-${j + 1} ${colors}" data-pawn="${colors}${j + 1}">${j + 1}</div>`;
+        }
+    }
+}
+
 
 function changePlayer() {
     let score;
@@ -85,22 +148,30 @@ function changePlayer() {
     player3Show.classList.remove('showThis');
     player4Show.classList.remove('showThis');
 
-    if(curPlayer === player1) {
-        // curPlayer.availTurn = [];
-        curPlayer = player2;
-        // curPlayer.availTurn.push(1);
-    } else if(curPlayer === player2) {
-        // curPlayer.availTurn = [];
-        curPlayer = player3;
-        // curPlayer.availTurn.push(1);
-    } else if(curPlayer === player3) {
-        // curPlayer.availTurn = [];
-        curPlayer = player4;
-        // curPlayer.availTurn.push(1);
-    } else if(curPlayer === player4) {
-        // curPlayer.availTurn = [];
-        curPlayer = player1;
-        // curPlayer.availTurn.push(1);
+    if(playerCount === '2') {
+        if(curPlayer === player1) {
+            curPlayer = player2;
+        } else if(curPlayer === player2) {
+            curPlayer = player1;
+        }
+    } else if(playerCount === '3') {
+        if(curPlayer === player1) {
+            curPlayer = player2;
+        } else if(curPlayer === player2) {
+            curPlayer = player3;
+        } else if(curPlayer === player3) {
+            curPlayer = player1;
+        }
+    } else if(playerCount === '4') {
+        if(curPlayer === player1) {
+            curPlayer = player2;
+        } else if(curPlayer === player2) {
+            curPlayer = player3;
+        } else if(curPlayer === player3) {
+            curPlayer = player4;
+        } else if(curPlayer === player4) {
+            curPlayer = player1;
+        }
     }
 
     activePlayer = document.querySelector(`.ludo__players--home .ludo__players--home-${curPlayer.color} .activePlayer`);
@@ -110,7 +181,6 @@ function changePlayer() {
 
     getInput();
 
-    // console.log(curPlayer.color);
 }
 
 function removeRanDices() {
